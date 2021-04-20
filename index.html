@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histoires d'Autrices</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/script.js"></script>
+</head>
+
+<body>
+    <main class="main">
+        <nav class="nav">
+            <ul>
+                <li>Embarquement</li>
+                <li><a href="#">Une</a></li>
+                <li><a href="#">Préface</a></li>
+                <li>Exploration</li>
+                <li><a href="#">Aventures</a></li>
+                <li><a href="#">Héroines</a></li>
+            </ul>
+        </nav>
+        <section class="hero">
+            <h1 class="hero__title">Histoires d'Autrices</h1>
+            <p class="hero__text">À la découverte des femmes de lettres étudiées, jouées, lues, primées ou publiées en
+                France.</p>
+        </section>
+        <section class="une">
+            <h2 class="une__title">Une</h2>
+            <q class="une__text">Embarquez dans nos aventures, pour découvrir ou redécouvrir les femmes qui se sont
+                distinguées dans la
+                littérature, héroïnes incontournables ou méconnues d'hier et d'aujourd'hui.</q>
+            <ul>
+                <li><a href="#">Programme du BAC L</a></li>
+                <li><a href="#">Programmes du collège</a></li>
+                <li><a href="#">Annales brevet des collèges</a></li>
+                <li><a href="#">Manuel Bréal Français Première toutes séries</a></li>
+                <li><a href="#">Manuel Nathan - littérature - textes et documents</a></li>
+            </ul>
+        </section>
+        <section class="preface">
+            <h2 class="preface__title">Préface</h2>
+            <button id="siteBtn" onclick="showSite()">
+                <h3>Site</h3>
+            </button>
+            <button id="visiautricesBtn" onclick="showVisiautrices()">
+                <h3>Visiautrices</h3>
+            </button>
+            <div id="site" style="display: block">
+                <p class="preface__text">Découvrir quels écrivaines et écrivains on étudie, joue au théâtre, lit, prime
+                    ou publie en France, fournit
+                    plusieurs points de vue sur le matrimoine littéraire français ou francophone, des autrices les plus
+                    célèbres aux
+                    oubliées du Panthéon littéraire.
+                </p>
+                <p class="preface__text">
+                    Développé à l'Université Paris-Est Marne-la-Vallée par Thi Van An Truong dans le cadre du projet de
+                    recherche
+                    VisiAutrices, ce site web permet d'explorer des données ouvertes réunies pour la plupart par
+                    l'association
+                    George, le deuxième texte, par Laura Borie et Mallory Thiébaud pendant leur stage pour le projet
+                    VisiAutrices,
+                    mais aussi par d'autres structures (ministère de la Culture, SACD) et partenaires (Centre Hubertine
+                    Auclert).
+                </p>
+                <p class="preface__text">
+                    Suite aux constats statistiques effectués, des recommandations pour améliorer la présence ou la
+                    visibilité des
+                    femmes de lettres sont également formulées par l'association George, le deuxième texte.
+                </p>
+                <p class="preface__text">
+                    Le projet de recherche VisiAutrices vise à mesurer et caractériser la place des femmes dans
+                    l’enseignement des
+                    lettres dans le secondaire et le supérieur, et son évolution. En effet, les femmes de lettres
+                    restent peu
+                    présentes dans les programmes, du secondaire à l’université : aucune au programme du baccalauréat
+                    littéraire de
+                    2002 à 2017, 4% dans les annales des épreuves anticipées de français du baccalauréat de 2012 à 2016,
+                    5% dans les
+                    programmes de l’agrégation externe de 2009 à 2018, 9% dans les programmes du concours d’entrée à
+                    l’Ecole normale
+                    supérieure, de 2008 à 2017.
+                </p>
+            </div>
+            <div id="visiautrices" style="display: none">
+                <p class="preface__text">
+                    Le projet de recherche VisiAutrices vise à mesurer et caractériser la place des femmes dans
+                    l’enseignement des lettres dans le secondaire et le supérieur, et son évolution. En effet, les
+                    femmes de lettres restent peu présentes dans les programmes, du secondaire à l’université : <a
+                        href="https://www.change.org/p/najatvb-donnez-leur-place-aux-femmes-dans-les-programmes-de-litt%C3%A9rature-au-bac-l">aucune
+                        au programme du baccalauréat littéraire de 2002 à 2017, </a> <a
+                        href="https://george2etexte.wordpress.com/2017/06/16/5-textes-de-femmes-cette-annee-au-bac-ca-progresse-mais-a-quel-rythme/">
+                        4% dans les annales des épreuves anticipées de français du baccalauréat de 2012 à 2016,</a> <a
+                        href="https://www.data.gouv.fr/fr/datasets/auteurs-et-autrices-dans-les-programmes-denseignement-ou-de-concours-de-lettres/">5%
+                        dans les programmes de l’agrégation externe de 2009 à 2018, 9% dans les programmes du concours
+                        d’entrée à l’Ecole normale supérieure, de 2008 à 2017.</a>
+                </p>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
