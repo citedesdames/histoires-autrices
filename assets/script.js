@@ -1,3 +1,17 @@
+function docReady(fn) {
+    // see if DOM is already available
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        // call on next available tick
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+}    
+
+docReady(function() {
+    document.getElementById('siteBtn').disabled = true;
+});
+
 function showSite() {
     var x = document.getElementById("site");
     var y = document.getElementById("visiautrices");
@@ -27,16 +41,3 @@ function showVisiautrices() {
 }
 
 
-function docReady(fn) {
-    // see if DOM is already available
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-        // call on next available tick
-        setTimeout(fn, 1);
-    } else {
-        document.addEventListener("DOMContentLoaded", fn);
-    }
-}    
-
-docReady(function() {
-    document.getElementById('siteBtn').disabled = true;
-});

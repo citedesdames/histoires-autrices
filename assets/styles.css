@@ -76,6 +76,18 @@ body {
   margin-bottom: 0;
 }
 
+.preface__btn {
+  font-family: 'Merriweather', serif;
+  color: #AAAAAA;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.preface__btn:disabled {
+  color: #000000;
+}
+
 #visiautrices {
   display: none;
 }

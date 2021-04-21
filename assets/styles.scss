@@ -70,6 +70,18 @@ body {
     &__text:last-of-type {
         margin-bottom: 0;
     }
+
+    &__btn {
+        font-family: 'Merriweather', serif;
+        color: #AAAAAA;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    &__btn:disabled{ 
+        color: #000000;
+    }
 }
 
 // JAVASCRIPT
