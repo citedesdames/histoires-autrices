@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histoires d'Autrices</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <script src="/assets/papaparse.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+    <script src="/assets/script.js"></script>
+</head>
+
+<body>
+    <main class="main">
+        <nav class="nav">
+            <ul>
+                <li>Embarquement</li>
+                <li><a href="#">Une</a></li>
+                <li><a href="#">Préface</a></li>
+                <li>Exploration</li>
+                <li><a href="#">Aventures</a></li>
+                <li><a href="#">Héroines</a></li>
+            </ul>
+        </nav>
+        <section class="hero">
+            <h1 class="hero__title">Programmes du collège</h1>
+            <p class="hero__text">Ce jeu de données recense les auteurs et autrices qui apparaissent dans les programmes de français du collège, en 2008.</p>
+            <img src="/assets/images/bg-hero.png" alt="" id="hero__img" class="hero__img">
+        </section>
+        <section class="data">
+            <canvas id="mychart">
+            </canvas>
+        </section>
+    </main>
+</body>
+
+</html>

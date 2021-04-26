@@ -10,6 +10,10 @@ function docReady(fn) {
 
 docReady(function() {
     document.getElementById('siteBtn').disabled = true;
+    var width = $(window).width();
+    if (width > 768){
+        $("#hero__img").animate({right: -200,opacity:0.3}, 1000);
+    }
 });
 
 function showSite() {
@@ -40,4 +44,68 @@ function showVisiautrices() {
     }
 }
 
+$.get('/assets/data/data1.csv', function (csvString) {
+
+    // Use PapaParse to convert string to array of objects
+    var data1 = Papa.parse(csvString, {
+        header: true,
+        encoding: "fr",
+        transform: function (h) {
+            return h.replace(',', '.')
+        },
+        dynamicTyping: true
+    }).data;
+    // console.log(data1[0].Genre);
+
+    var size = data1.length;
+    console.log("Size :".size);
+    let autrice = 0;
+    let auteur = 0; 
+
+    for (var i = 0; i < size; i++) {
+        if (data1[i].Genre == "F") {
+            autrice++;
+        } else if (data1[i].Genre == "M") {
+            auteur++;
+        }       
+    }
+    
+    console.log(autrice);
+    console.log(auteur);
+    data = {
+        datasets: [{
+            data: [ auteur, autrice],
+            backgroundColor: ["#f1dfd1", "#cca269"]
+        }],
+    
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Auteur',
+            'Autrice'
+        ],
+
+    };
+
+    var ctx = document.getElementById("mychart");
+    var chart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: {
+        responsive: true,
+        plugins: {
+            legend: {
+            position: 'top',
+            },
+            title: {
+            display: true,
+            text: 'Chart.js Pie Chart'
+            },
+            datasource: {
+                url: '/assets/data/data1.csv'
+            }
+        }
+        }
+    });
+
+});
 
