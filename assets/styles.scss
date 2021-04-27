@@ -138,12 +138,41 @@ body {
 }
 
 .data {
-    height: 75vh;
     position: relative;
     margin: 0 10%;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 5rem;
+
+        &__title{
+            margin-top: 0;
+            font-family: 'Merriweather', serif;
+            font-size: 3rem;
+        }
+
+        &__chart{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem;
+            &__container{
+                width: 50%;
+            }
+            &__text{
+                width: 50%;
+                color: #666  !important;
+                &__link {
+                    color: #666;
+                    text-decoration: none;
+                    font-size: 1.5rem;
+                }
+                &__link:hover {
+                    color: #000000;
+                    text-decoration: none;
+                }
+            }
+        }
 }
 
 // JAVASCRIPT

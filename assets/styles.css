@@ -155,7 +155,6 @@ body {
 }
 
 .data {
-  height: 75vh;
   position: relative;
   margin: 0 10%;
   display: -webkit-box;
@@ -168,6 +167,46 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-bottom: 5rem;
+}
+
+.data__title {
+  margin-top: 0;
+  font-family: 'Merriweather', serif;
+  font-size: 3rem;
+}
+
+.data__chart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 1rem;
+}
+
+.data__chart__container {
+  width: 50%;
+}
+
+.data__chart__text {
+  width: 50%;
+  color: #666  !important;
+}
+
+.data__chart__text__link {
+  color: #666;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.data__chart__text__link:hover {
+  color: #000000;
+  text-decoration: none;
 }
 
 #visiautrices {

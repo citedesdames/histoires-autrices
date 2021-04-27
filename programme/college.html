@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     <script src="/assets/script.js"></script>
 </head>
 
@@ -28,12 +29,19 @@
         </nav>
         <section class="hero">
             <h1 class="hero__title">Programmes du collège</h1>
-            <p class="hero__text">Ce jeu de données recense les auteurs et autrices qui apparaissent dans les programmes de français du collège, en 2008.</p>
+            <p class="hero__text">Ce jeu de données recense les auteurs et autrices qui apparaissent dans les programmes
+                de français du collège, en 2008.</p>
             <img src="/assets/images/bg-hero.png" alt="" id="hero__img" class="hero__img">
         </section>
         <section class="data">
-            <canvas id="mychart">
-            </canvas>
+            <h1 class="data__title"> La présence de nos héroïnes. </h1>
+            <p class="data__text">Consultez la biographie de chacune des héroïnes figurées en cliquant sur son nom !</p>
+            <div class="data__chart">
+                <div class="data__chart__container">
+                    <canvas  id="mychart"></canvas>
+                </div>
+                <p class="data__chart__text" id="autrice_nom"></p>
+            </div>
         </section>
     </main>
 </body>
