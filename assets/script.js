@@ -14,6 +14,12 @@ docReady(function() {
     if (width > 768){
         $("#hero__img").animate({right: -200,opacity:0.3}, 1000);
     }
+
+    $( "#menuButton" ).click(function() {
+        console.log("Clicked on menu button");
+        $("#navList").toggle();
+        // transform", "translate3d(-100px,0, 0)"
+     });
 });
 
 function showSite() {
@@ -43,4 +49,5 @@ function showVisiautrices() {
         x.style.display = "none";
     }
 }
+
 

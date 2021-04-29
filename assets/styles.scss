@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto&display=swap');
 
+@media only screen and (max-width: 768px) {
+
+  .une {
+      &__flex {
+          margin: 5rem 0 !important;
+            &__item{ 
+                width: 100% !important;
+                margin-right: 0 !important;
+                margin-bottom: 1rem !important;
+            }
+        }
+  }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -73,11 +87,46 @@ body {
 }
 
 .nav {
-    display: none;
+    position: absolute;
+    right: 2rem;
+    top: 4rem;
+    z-index: 4;
+    &__button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 5;
+        right: 0;
+        position: absolute;
+    }
+    &__button span{
+        display: block;
+        width: 33px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+        
+        background: #cdcdcd;
+        border-radius: 3px;
+        
+        z-index: 4;
+        
+        transform-origin: 4px 0px;
+        
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                    background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+                    opacity 0.55s ease;
+            
+    }
+    &__list {
+        position: absolute;
+        right: 0;
+        margin-top: 3rem;
+        display:none;
+    }
 }
 
 .une {
-    height: 75vh;
     position: relative;
     margin: 0 10%;
     display: flex;
@@ -110,7 +159,7 @@ body {
         font-size: 5em;
         position: absolute;
         left: -5px;
-        top: 140px;
+        margin-top: -95px;
         color: #666;
     }
 
@@ -119,8 +168,45 @@ body {
         font-size: 5em;
         position: absolute;
         right: -5px;
-        top: 190px;
+        margin-top: -30px;
         color: #666;
+    }
+
+    &__flex {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        align-items: center;
+        margin: 5rem;
+        &__item {
+            width: calc((100% / 3) - (2rem / 3));
+            height: 200px;
+            background-color: #cca269;
+            display: block;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            transition: .2s;
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
+        }
+        &__item:hover {
+            transform: scale(1.10);
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+        &__item a{
+            width: 100%;
+            height: 100%;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 2rem;
+        }
     }
 }
 

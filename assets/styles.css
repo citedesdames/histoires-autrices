@@ -1,5 +1,16 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto&display=swap");
+@media only screen and (max-width: 768px) {
+  .une__flex {
+    margin: 5rem 0 !important;
+  }
+  .une__flex__item {
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -85,11 +96,46 @@ body {
 }
 
 .nav {
+  position: absolute;
+  right: 2rem;
+  top: 4rem;
+  z-index: 4;
+}
+
+.nav__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 5;
+  right: 0;
+  position: absolute;
+}
+
+.nav__button span {
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  background: #cdcdcd;
+  border-radius: 3px;
+  z-index: 4;
+  -webkit-transform-origin: 4px 0px;
+          transform-origin: 4px 0px;
+  -webkit-transition: background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease, -webkit-transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  transition: background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease, -webkit-transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease, -webkit-transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+.nav__list {
+  position: absolute;
+  right: 0;
+  margin-top: 3rem;
   display: none;
 }
 
 .une {
-  height: 75vh;
   position: relative;
   margin: 0 10%;
   display: -webkit-box;
@@ -130,7 +176,7 @@ body {
   font-size: 5em;
   position: absolute;
   left: -5px;
-  top: 140px;
+  margin-top: -95px;
   color: #666;
 }
 
@@ -139,8 +185,63 @@ body {
   font-size: 5em;
   position: absolute;
   right: -5px;
-  top: 190px;
+  margin-top: -30px;
   color: #666;
+}
+
+.une__flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 5rem;
+}
+
+.une__flex__item {
+  width: calc((100% / 3) - (2rem / 3));
+  height: 200px;
+  background-color: #cca269;
+  display: block;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.une__flex__item:nth-child(3n) {
+  margin-right: 0;
+}
+
+.une__flex__item:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.une__flex__item a {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: #000000;
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem;
 }
 
 .preface {

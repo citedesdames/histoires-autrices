@@ -15,10 +15,15 @@
 <body>
     <main class="main">
         <nav class="nav">
-            <ul>
+            <button class="nav__button" id="menuButton">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav__list" id="navList">
                 <li>Embarquement</li>
-                <li><a href="#">Une</a></li>
-                <li><a href="#">Préface</a></li>
+                <li><a href="#une">Une</a></li>
+                <li><a href="#preface">Préface</a></li>
                 <li>Exploration</li>
                 <li><a href="#">Aventures</a></li>
                 <li><a href="#">Héroines</a></li>
@@ -30,20 +35,20 @@
                 France.</p>
             <img src="assets/images/bg-hero.png" alt="" id="hero__img" class="hero__img">
         </section>
-        <section class="une">
+        <section class="une" id="une">
             <h2 class="une__title">Une</h2>
             <q class="une__text">Embarquez dans nos aventures, pour découvrir ou redécouvrir les femmes qui se sont
                 distinguées dans la
                 littérature, héroïnes incontournables ou méconnues d'hier et d'aujourd'hui.</q>
-            <ul>
-                <li><a href="programme/bac-l.html">Programme du BAC L</a></li>
-                <li><a href="programme/college.html">Programmes du collège</a></li>
-                <li><a href="programme/annales-college.html">Annales brevet des collèges</a></li>
-                <li><a href="#">Manuel Bréal Français Première toutes séries</a></li>
-                <li><a href="programme/nathan-litterature.html">Manuel Nathan - littérature - textes et documents</a></li>
+            <ul class="une__flex">
+                <li class="une__flex__item"><a href="dataset/dataset.html?id=4">Programme du BAC L</a></li>
+                <li class="une__flex__item"><a href="dataset/dataset.html?id=3">Programmes du collège</a></li>
+                <li class="une__flex__item"><a href="dataset/dataset.html?id=1">Annales brevet des collèges</a></li>
+                <li class="une__flex__item"><a href="#">Manuel Bréal Français Première toutes séries</a></li>
+                <li class="une__flex__item"><a href="dataset/dataset.html?id=10">Manuel Nathan - littérature - textes et documents</a></li>
             </ul>
         </section>
-        <section class="preface">
+        <section class="preface" id="preface">
             <h2 class="preface__title">Préface</h2>
             <button class="preface__btn" id="siteBtn" onclick="showSite()">
                 <h3>Site</h3>
