@@ -43,14 +43,42 @@ $.get('/assets/data/data1.csv', function (csvString) {
     // console.log(autrice_noms);
 
     let autriceLinks = [];
+    let autriceMap = {};
 
-    //Find and show links to female authors - Programme de collège
-    for (var i = 0; i < autrice_noms.length; i++){
-        autriceLinks.push(`<a class="data__chart__text__link" href="#"> ${autrice_noms[i]}</a>`);
+    //Find and show links to female authors
+    for (let i = 0; i < autrice_noms.length; i++){
+
+        autriceLinks.push(`${autrice_noms[i]}`);
+
     }
-    document.getElementById("autrice_nom").innerHTML = autriceLinks;
+    
+    //Count female authors appearing to use for word cloud
+    autriceLinks.forEach(function(x) { autriceMap[x] = (autriceMap[x] || 0)+1; });
 
-    //data for pie chart - Programme de collège
+
+    //Detect duplicates into a new array
+    let values_already_seen = [];
+    
+    for (let i = 0; i< autrice_noms.length; i++) {
+        if ( values_already_seen.indexOf(autriceLinks[i]) === -1) {
+            console.log("Duplicate elements found.");
+            values_already_seen.push(autriceLinks[i]);
+        }
+    }
+
+    //Show links to female authors
+    let autrice_nom_anchor = document.getElementById("autrice_nom");
+    
+    for (let i = 0; i < values_already_seen.length; i++) {
+        let wordcloud_size = Math.ceil(Math.log(autriceMap[values_already_seen[i]]*1000)+10);
+
+        console.log(values_already_seen);
+        autrice_nom_anchor.innerHTML = autrice_nom_anchor.innerHTML + `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="#"> ${values_already_seen[i]}</a>`;
+    }
+
+
+
+    //data for pie chart 
     data = {
         datasets: [{
             data: [ auteur, autrice],
@@ -65,7 +93,7 @@ $.get('/assets/data/data1.csv', function (csvString) {
 
     };
 
-    //Generate a pie chart with chart.js - Programme de collège
+    //Generate a pie chart with chart.js 
     var ctx = document.getElementById("mychart").getContext('2d');
     var chart = new Chart(ctx, {
         type: 'pie',
