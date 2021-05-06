@@ -22,7 +22,7 @@ $.get('/assets/data/data1.csv', function (csvString) {
     console.log(url_id);
     // console.log(data1[1]['Jeu de données']);
     
-    //Count the number of female and male authors appearing in French 'collège' school programmes
+    //Count the number of female and male authors appearing 
     for (var i = 0; i < size; i++) {
         if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id ) {
             autrice++;
@@ -61,19 +61,20 @@ $.get('/assets/data/data1.csv', function (csvString) {
     
     for (let i = 0; i< autrice_noms.length; i++) {
         if ( values_already_seen.indexOf(autriceLinks[i]) === -1) {
-            console.log("Duplicate elements found.");
             values_already_seen.push(autriceLinks[i]);
         }
     }
+
+
 
     //Show links to female authors
     let autrice_nom_anchor = document.getElementById("autrice_nom");
     
     for (let i = 0; i < values_already_seen.length; i++) {
-        let wordcloud_size = Math.ceil(Math.log(autriceMap[values_already_seen[i]]*1000)+10);
-
-        console.log(values_already_seen);
-        autrice_nom_anchor.innerHTML = autrice_nom_anchor.innerHTML + `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="#"> ${values_already_seen[i]}</a>`;
+        let wordcloud_size = Math.ceil(5*Math.log(autriceMap[values_already_seen[i]])+16);
+        //Replace space with non-breakable space
+        // values_already_seen[i].replace('',/&nbsp;/g);
+        autrice_nom_anchor.innerHTML = autrice_nom_anchor.innerHTML + `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen[i]}">${values_already_seen[i]} </a>`;
     }
 
 
