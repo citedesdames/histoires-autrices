@@ -18,7 +18,7 @@
 <body>
     <main class="main">
         <nav class="return">
-            <a class="return__link" href="../index.html">◀︎ Retour</a>
+            <a class="return__link" href="javascript:history.back()">◀︎ Retour</a>
         </nav>
         <section class="hero">
             <h1 class="hero__title" id="h1_title"></h1>
@@ -26,8 +26,8 @@
             <img src="/assets/images/bg-hero.png" alt="" id="hero__img" class="hero__img">
         </section>
         <section class="data">
-            <h1 class="data__title"> La présence de nos héroïnes. </h1>
-            <p class="data__text">Consultez la biographie de chacune des héroïnes figurées en cliquant sur son nom !</p>
+            <h1 class="data__title"> Les aventures auxquelles elle a pris part...</h1>
+            <p class="data__text">Découvrez les jeux de données concernant <span id="author_title"></span>.</p>
             <div class="data__chart">
                 <div class="data__chart__container">
                     <canvas  id="mychart"></canvas>

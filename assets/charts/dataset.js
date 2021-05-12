@@ -74,7 +74,7 @@ $.get('/assets/data/data1.csv', function (csvString) {
         let wordcloud_size = Math.ceil(5*Math.log(autriceMap[values_already_seen[i]])+16);
         //Replace space with non-breakable space
         // values_already_seen[i].replace('',/&nbsp;/g);
-        autrice_nom_anchor.innerHTML = autrice_nom_anchor.innerHTML + `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen[i]}">${values_already_seen[i]} </a>`;
+        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen[i]}">${values_already_seen[i]} </a>`;
     }
 
 
