@@ -77,8 +77,6 @@ $.get('/assets/data/data1.csv', function (csvString) {
         autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen[i]}">${values_already_seen[i]} </a>`;
     }
 
-
-
     //data for pie chart 
     data = {
         datasets: [{
