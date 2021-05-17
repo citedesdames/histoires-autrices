@@ -10,14 +10,15 @@ $.get('/assets/data/data1.csv', function (csvString) {
         dynamicTyping: true
     }).data;
 
-    let url_key = location.href.split("?key=")[1].replace(/%20/g,' ');
-    // console.log("nom : " + url_key);
+    let url_key = location.href.split("?key=")[1];
+
+    console.log("id : " + url_key);
     
     let datasetLinks = {'dataset':[],'id':[]};
     for (var i = 0; i < data1.length; i++) {
-        if (data1[i]['Auteur ou autrice'] == url_key ) {
+        if (data1[i]['author_id_FK'] == url_key ) {
             //Get name of data and return as HTML element for the main h1 title
-            let h1_text = data1[i]['Auteur ou autrice'];
+            let h1_text = data1[i]['Nom normalisé'];
             document.getElementById("h1_title").innerHTML = h1_text;
             document.getElementById("author_title").innerHTML = h1_text;
 
