@@ -39,6 +39,7 @@ $.get('/assets/data/data1.csv', function (csvString) {
         }
     }
 
+    //Render dataset links
     for (let i=0; i < trimmedValues['dataset'].length; i++) {
         datasetLink = `<li class="dataset__flex__item"><a href="/dataset/dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
@@ -53,5 +54,5 @@ $.getJSON('https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.o
         tbGallica.push(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');        
         // console.log(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');
     }
-    // console.log(tbGallica);
+    console.log(tbGallica);
 });

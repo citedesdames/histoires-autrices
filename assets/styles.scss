@@ -1,5 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto&display=swap');
 
+@mixin flexContent {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    align-self: center;
+    margin: 5rem;
+    max-width: 1000px;
+        &__item {
+            width: calc((100% / 3) - (2rem / 3));
+            height: 200px;
+            background-color: #cca269;
+            display: block;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            transition: .2s;
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
+        }
+        &__item:hover {
+            transform: scale(1.10);
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+        }
+        &__item a{
+            width: 100%;
+            height: 100%;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 2rem;
+        }
+}
+
 @media only screen and (max-width: 768px) {
 
   .une, .dataset {
@@ -189,40 +227,7 @@ body {
     }
 
     &__flex {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 0;
-        align-items: center;
-        margin: 5rem;
-        &__item {
-            width: calc((100% / 3) - (2rem / 3));
-            height: 200px;
-            background-color: #cca269;
-            display: block;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-            transition: .2s;
-            &:nth-child(3n) {
-                margin-right: 0;
-            }
-        }
-        &__item:hover {
-            transform: scale(1.10);
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-        }
-        &__item a{
-            width: 100%;
-            height: 100%;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 1.5rem;
-            padding: 2rem;
-        }
+        @include flexContent;
     }
 }
 
@@ -311,40 +316,7 @@ body {
     }
 
     &__flex {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 0;
-        align-items: center;
-        margin: 5rem;
-        &__item {
-            width: calc((100% / 3) - (2rem / 3));
-            height: 200px;
-            background-color: #cca269;
-            display: block;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-            transition: .2s;
-            &:nth-child(3n) {
-                margin-right: 0;
-            }
-        }
-        &__item:hover {
-            transform: scale(1.10);
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-        }
-        &__item a{
-            width: 100%;
-            height: 100%;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 1.5rem;
-            padding: 2rem;
-        }
+        @include flexContent;
     }
 }
 

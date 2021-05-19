@@ -216,10 +216,10 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   padding: 0;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-item-align: center;
+      align-self: center;
   margin: 5rem;
+  max-width: 1000px;
 }
 
 .une__flex__item {
@@ -381,10 +381,10 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   padding: 0;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-item-align: center;
+      align-self: center;
   margin: 5rem;
+  max-width: 1000px;
 }
 
 .dataset__flex__item {

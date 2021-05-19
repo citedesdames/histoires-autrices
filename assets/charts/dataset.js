@@ -1,4 +1,4 @@
-$.get('/assets/data/data1.csv', function (csvString) {
+$.get('https://www.google.com/url?q=https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid%3D555683372%26single%3Dtrue%26output%3Dcsv&sa=D&source=editors&ust=1621437274716000&usg=AOvVaw1U-UPobyuRwXk8019WDfG_', function (csvString) {
 
     // Use PapaParse to convert string to array of objects
     var data1 = Papa.parse(csvString, {
@@ -10,37 +10,42 @@ $.get('/assets/data/data1.csv', function (csvString) {
         dynamicTyping: true
     }).data;
 
-    let size = data1.length;
-
-    let autrice = 0;
-    let auteur = 0; 
+    let authorCount = {'f':[],'m':[]};
     let autrice_noms = {'name':[],'id':[]};
 
-    console.log(autrice_noms);
-
     let url_id = location.href.split("?id=")[1];
-    console.log(url_id);
     
     //Count the number of female and male authors appearing 
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < data1.length; i++) {
         if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id ) {
-            autrice++;
+            authorCount['f'].push(data1[i]["author_id_FK"]);
             autrice_noms['name'].push(data1[i]["Auteur ou autrice"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
             //Get name of data and return as HTML element for the main h1 title
             let h1_text = data1[i]['Jeu de données'];
             document.getElementById("h1_title").innerHTML = h1_text;
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id ) {
-            auteur++;
+            authorCount['m'].push(data1[i]["author_id_FK"]);
             //Get name of data and return as HTML element for the main h1 title
             let h1_text = data1[i]['Jeu de données'];
             document.getElementById("h1_title").innerHTML = h1_text;
         }       
-
     }
-    // console.log(autrice);
-    // console.log(auteur);
-    // console.log(autrice_noms);
+
+    //authorCount : Detect duplicates and trim them into a new array
+    let trimmedCount = {'f':[],'m':[]};
+
+    for (let i = 0; i < authorCount['f'].length; i++) {
+        if ( trimmedCount['f'].indexOf(authorCount['f'][i]) === -1) {
+            trimmedCount['f'].push(authorCount['f'][i]);
+        }
+    }
+
+    for (let i = 0; i < authorCount['m'].length; i++) {
+        if ( trimmedCount['m'].indexOf(authorCount['m'][i]) === -1) {
+            trimmedCount['m'].push(authorCount['m'][i]);
+        }
+    }
 
     let autriceLinks = {'name':[],'id':[]};
     let autriceMap = {};
@@ -73,8 +78,11 @@ $.get('/assets/data/data1.csv', function (csvString) {
     //Show links to female authors
     let autrice_nom_anchor = document.getElementById("autrice_nom");
     
+    // sorting by alphabetical order
+    // values_already_seen;
+
     for (let i = 0; i < values_already_seen['name'].length; i++) {
-        let wordcloud_size = Math.ceil(5*Math.log(autriceMap[values_already_seen['name'][i]])+16);
+        let wordcloud_size = Math.ceil(10*Math.log(autriceMap[values_already_seen['name'][i]])+12);
         //Replace space with non-breakable space
         // values_already_seen[i].replace('',/&nbsp;/g);
         autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
@@ -83,7 +91,7 @@ $.get('/assets/data/data1.csv', function (csvString) {
     //data for pie chart 
     data = {
         datasets: [{
-            data: [ auteur, autrice],
+            data: [ trimmedCount['m'].length, trimmedCount['f'].length],
             backgroundColor: ["#f1dfd1", "#cca269"]
         }],
     
