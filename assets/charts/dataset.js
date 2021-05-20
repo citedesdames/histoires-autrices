@@ -85,7 +85,7 @@ $.get('../assets/data/data1.csv', function (csvString) {
         let wordcloud_size = Math.ceil(10*Math.log(autriceMap[values_already_seen['name'][i]])+12);
         //Replace space with non-breakable space
         // values_already_seen[i].replace('',/&nbsp;/g);
-        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
+        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
     }
 
     //data for pie chart 
