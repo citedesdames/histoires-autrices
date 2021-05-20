@@ -51,9 +51,11 @@ $.getJSON('https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.o
     // JSON result in `dataGallica` variable
     let tbGallica = {'title':[],'thumbnail':[],'link':[]};
     for (let i=0 ; i < dataGallica['results']['bindings'].length; i++) {
-        tbGallica['thumbnail'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');
-        tbGallica['link'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value']);
-        tbGallica['title'].push(dataGallica['results']['bindings'][i]['titreManifestation']['value']);     
+        // if (dataGallica['results']['bindings'][i]) {
+            tbGallica['thumbnail'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');
+            tbGallica['link'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value']);
+            tbGallica['title'].push(dataGallica['results']['bindings'][i]['titreManifestation']['value']);     
+        // }
     }
     console.log(tbGallica);
 
