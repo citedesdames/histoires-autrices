@@ -7,49 +7,72 @@
     align-self: center;
     margin: 5rem;
     max-width: 1000px;
-        &__item {
-            width: calc((100% / 3) - (2rem / 3));
-            height: 200px;
-            background-color: #cca269;
-            display: block;
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-            transition: .2s;
-            &:nth-child(3n) {
-                margin-right: 0;
-            }
+
+    &__item {
+        width: calc((100% / 3) - (2rem / 3));
+        min-height: 200px;
+        background-color: #cca269;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        transition: .2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        &:nth-child(3n) {
+            margin-right: 0;
         }
-        &__item:hover {
-            transform: scale(1.10);
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
+        &__img {
+            height: 192px;
+            margin-bottom: 1.5rem;
+            z-index: 1;
+            width: auto;
         }
-        &__item a{
-            width: 100%;
-            height: 100%;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 1.5rem;
-            padding: 2rem;
-        }
+    }
+
+    &__item:hover {
+        transform: scale(1.10);
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    }
+
+    &__item a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: #000000;
+        text-decoration: none;
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 2rem;
+        z-index: 2;
+    }
+}
+
+@mixin h1Title {
+    margin-top: 0;
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
 }
 
 @media only screen and (max-width: 768px) {
 
-  .une, .dataset {
-      &__flex {
-          margin: 5rem 0 !important;
-            &__item{ 
+    .une,
+    .dataset {
+        &__flex {
+            margin: 5rem 0 !important;
+
+            &__item {
                 width: 100% !important;
                 margin-right: 0 !important;
                 margin-bottom: 1rem !important;
             }
         }
-  }
+    }
 }
 
 * {
@@ -58,6 +81,44 @@
 
 body {
     margin: 0;
+}
+
+.loader {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #cca269;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lds-dual-ring {
+    width: 80px;
+    height: 80px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .main {
@@ -75,7 +136,7 @@ body {
     justify-content: center;
     flex-direction: column;
 
-    &__title{
+    &__title {
         margin-top: 0;
         font-family: 'Merriweather', serif;
         font-size: 4rem;
@@ -83,13 +144,13 @@ body {
         z-index: 3;
         color: #cca269;
     }
-    
-    &__text{
+
+    &__text {
         margin: 0;
         z-index: 3;
     }
 
-    &__img{
+    &__img {
         position: absolute;
         opacity: 0;
         right: -50rem;
@@ -97,12 +158,14 @@ body {
     }
 
     &:after {
-        background: rgb(247,246,244);
-        background: linear-gradient(0deg, rgba(247,246,244,1) 0%, rgba(247,246,244,0) 50%);
+        background: rgb(247, 246, 244);
+        background: linear-gradient(0deg, rgba(247, 246, 244, 1) 0%, rgba(247, 246, 244, 0) 50%);
         position: absolute;
         content: '';
-        left:0; top:0;
-        width:100%; height:100%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
         z-index: 2;
     }
 }
@@ -118,6 +181,7 @@ body {
         font-size: 1.5rem;
         transition: .2s;
         transition-timing-function: ease-in-out;
+
         &:hover {
             color: #000000;
         }
@@ -129,6 +193,7 @@ body {
     right: 2rem;
     top: 4rem;
     z-index: 4;
+
     &__button {
         background: none;
         border: none;
@@ -137,34 +202,39 @@ body {
         right: 0;
         position: absolute;
     }
-    &__button span{
+
+    &__button span {
         display: block;
         width: 33px;
         height: 4px;
         margin-bottom: 5px;
         position: relative;
-        
+
         background: #cdcdcd;
         border-radius: 3px;
-        
+
         z-index: 4;
     }
+
     &__list {
         position: absolute;
         right: 0;
         margin-top: 3rem;
-        display:none;
+        display: none;
         background-color: #cca269;
         padding: 0;
         width: 200px;
-        &__title{
+
+        &__title {
             list-style-type: none;
             padding: 1rem;
             font-weight: 700;
             font-size: 1.2rem;
         }
-        &__link{
+
+        &__link {
             list-style-type: none;
+
             a {
                 width: 100%;
                 padding: 1rem;
@@ -172,6 +242,7 @@ body {
                 color: #000000;
                 text-decoration: none;
             }
+
             a:hover {
                 background-color: #cab9a0;
 
@@ -186,16 +257,14 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    
+
     &__title {
-        margin-top: 0;
-        font-family: 'Merriweather', serif;
-        font-size: 3rem;
+        @include h1Title();
     }
 
-    &__text{
-        display: block; 
-        background-image: url("images/book--fr.svg"); 
+    &__text {
+        display: block;
+        background-image: url("images/book--fr.svg");
         background-repeat: no-repeat;
         background-size: 100% 100%;
         padding: 1rem 4rem;
@@ -232,16 +301,14 @@ body {
 }
 
 .preface {
-    position: relative; 
+    position: relative;
     margin: 0 10%;
     padding-bottom: 10rem;
     padding-top: 10rem;
-    
 
-    &__title{
-        margin-top: 0;
-        font-family: 'Merriweather', serif;
-        font-size: 3rem;
+
+    &__title {
+        @include h1Title();
     }
 
     &__text:last-of-type {
@@ -256,7 +323,7 @@ body {
         cursor: pointer;
     }
 
-    &__btn:disabled{ 
+    &__btn:disabled {
         color: #000000;
     }
 }
@@ -269,36 +336,37 @@ body {
     flex-direction: column;
     margin-bottom: 5rem;
 
-        &__title{
-            margin-top: 0;
-            font-family: 'Merriweather', serif;
-            font-size: 3rem;
+    &__title {
+        @include h1Title();
+    }
+
+    &__chart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+
+        &__container {
+            width: 50%;
         }
 
-        &__chart{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 1rem;
-            &__container{
-                width: 50%;
-            }
-            &__text{
-                width: 50%;
-                color: #666  !important;
-                &__link {
-                    color: #666;
+        &__text {
+            width: 50%;
+            color: #666 !important;
+
+            &__link {
+                text-decoration: none;
+                font-size: 1.5rem;
+                transition: .2s;
+                transition-timing-function: ease-in-out;
+
+                &:hover {
+                    color: #000000;
                     text-decoration: none;
-                    font-size: 1.5rem;
-                    transition: .2s;
-                    transition-timing-function: ease-in-out;
-                    &:hover {
-                        color: #000000;
-                        text-decoration: none;
-                    }
                 }
             }
         }
+    }
 }
 
 .dataset {
@@ -308,7 +376,7 @@ body {
     justify-content: center;
     flex-direction: column;
     margin-bottom: 5rem;
-    
+
     &__title {
         margin-top: 0;
         font-family: 'Merriweather', serif;
@@ -317,6 +385,23 @@ body {
 
     &__flex {
         @include flexContent;
+    }
+}
+
+.bnf {
+    position: relative;
+    margin: 0 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 5rem;
+
+    &__title {
+        @include h1Title();
+    }
+
+    &__flex {
+        @include flexContent();
     }
 }
 

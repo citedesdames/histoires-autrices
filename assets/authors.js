@@ -49,10 +49,35 @@ $.get('/assets/data/data1.csv', function (csvString) {
 // Gallica JSON data
 $.getJSON('https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.org/dc/terms/%3E%20%0APREFIX%20foaf:%20%3Chttp://xmlns.com/foaf/0.1/%3E%20%0APREFIX%20rdarelationships:%20%3Chttp://rdvocab.info/RDARelationshipsWEMI/%3E%20%0ASELECT%20?auteur%20?expression%20?manifestation%20?titreManifestation%20?dateManifestation%20?fichierGallica%20?imgGallica%0AWHERE%20%7B%0A?auteur%20foaf:name%20%22George%20Sand%22.%0A?expression%20dcterms:contributor%20?auteur.%20%0A?manifestation%20dcterms:date%20?dateManifestation.%20%0A?manifestation%20dcterms:title%20?titreManifestation.%20%0A?manifestation%20rdarelationships:expressionManifested%20?expression.%20%0A?manifestation%20rdarelationships:electronicReproduction%20?fichierGallica.%20%0A%7D%20%0AORDER%20BY%20ASC(?dateManifestation)%0A&format=application/json ', function(dataGallica) {
     // JSON result in `dataGallica` variable
-    let tbGallica = [];
+    let tbGallica = {'title':[],'thumbnail':[],'link':[]};
     for (let i=0 ; i < dataGallica['results']['bindings'].length; i++) {
-        tbGallica.push(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');        
-        // console.log(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');
+        tbGallica['thumbnail'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');
+        tbGallica['link'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value']);
+        tbGallica['title'].push(dataGallica['results']['bindings'][i]['titreManifestation']['value']);     
     }
     console.log(tbGallica);
+
+    //detect duplicates and push into new object
+    let trimmedGallica = {'title':[],'thumbnail':[],'link':[]};
+
+    for (let i = 0; i< tbGallica['title'].length; i++) {
+        if ( trimmedGallica['title'].indexOf(tbGallica['title'][i]) === -1) {
+            trimmedGallica['title'].push(tbGallica['title'][i]);
+            trimmedGallica['link'].push(tbGallica['link'][i]);
+            trimmedGallica['thumbnail'].push(tbGallica['thumbnail'][i]);
+        }
+    }
+
+    //generate Gallica thumbnails
+    for (let i=0; i < trimmedGallica['title'].length; i++) {
+        worksLink = `<li class="bnf__flex__item"><a href="${trimmedGallica['link'][i]}"><img class="bnf__flex__item__img" src="${trimmedGallica['thumbnail'][i]}.jpg">${trimmedGallica['title'][i]}</a></li>`;
+        document.getElementById("worksLinks").innerHTML += worksLink;
+        console.log(trimmedGallica['thumbnail'][i]);
+    }
+    
+});
+
+$(window).on("load",function(){
+    $(".loader").fadeOut("slow");
+    $("body").css("overflow","visible");
 });

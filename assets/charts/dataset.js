@@ -1,4 +1,4 @@
-$.get('https://www.google.com/url?q=https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid%3D555683372%26single%3Dtrue%26output%3Dcsv&sa=D&source=editors&ust=1621437274716000&usg=AOvVaw1U-UPobyuRwXk8019WDfG_', function (csvString) {
+$.get('../assets/data/data1.csv', function (csvString) {
 
     // Use PapaParse to convert string to array of objects
     var data1 = Papa.parse(csvString, {
@@ -19,7 +19,7 @@ $.get('https://www.google.com/url?q=https://docs.google.com/spreadsheets/d/e/2PA
     for (var i = 0; i < data1.length; i++) {
         if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id ) {
             authorCount['f'].push(data1[i]["author_id_FK"]);
-            autrice_noms['name'].push(data1[i]["Auteur ou autrice"]);
+            autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
             //Get name of data and return as HTML element for the main h1 title
             let h1_text = data1[i]['Jeu de données'];
@@ -85,7 +85,7 @@ $.get('https://www.google.com/url?q=https://docs.google.com/spreadsheets/d/e/2PA
         let wordcloud_size = Math.ceil(10*Math.log(autriceMap[values_already_seen['name'][i]])+12);
         //Replace space with non-breakable space
         // values_already_seen[i].replace('',/&nbsp;/g);
-        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
+        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="/authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
     }
 
     //data for pie chart 
@@ -138,7 +138,13 @@ $.get('https://www.google.com/url?q=https://docs.google.com/spreadsheets/d/e/2PA
         }
     });
 
-
+    function colorSize(wordcloud_size){
+        if (wordcloud_size > 160) {
+            return 160;
+        } else {
+            return wordcloud_size;
+        }
+    }
     
 
     
