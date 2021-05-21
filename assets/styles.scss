@@ -7,10 +7,12 @@
     align-self: center;
     margin: 5rem;
     max-width: 1000px;
+    width: 100%;
 
     &__item {
         width: calc((100% / 3) - (2rem / 3));
         min-height: 200px;
+        min-width: 130px;
         background-color: #cca269;
         margin-right: 1rem;
         margin-bottom: 1rem;
@@ -154,6 +156,15 @@ body {
         position: absolute;
         opacity: 0;
         right: -50rem;
+        z-index: 1;
+    }
+
+    &__portait {
+        position: absolute;
+        opacity: 1;
+        right: 10rem;
+        top: 0;
+        width: 20vw;
         z-index: 1;
     }
 

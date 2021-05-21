@@ -1,73 +1,100 @@
-$.get('../assets/data/data1.csv', function (csvString) {
+// Use PapaParse to convert string to array of objects
+// var data1 = Papa.parse(csvString, {
+//     header: true,
+//     encoding: "fr",
+//     transform: function (h) {
+//         return h.replace(',', '.')
+//     },
+//     dynamicTyping: true
+// }).data;
+var data1;
+Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
+    download: true,
+    header: true,
+    complete: function (results) {
+        data1 = results.data;
+        console.log(data1);
+        loadData(data1);
+    }
+});
 
-    // Use PapaParse to convert string to array of objects
-    var data1 = Papa.parse(csvString, {
-        header: true,
-        encoding: "fr",
-        transform: function (h) {
-            return h.replace(',', '.')
-        },
-        dynamicTyping: true
-    }).data;
+function loadData(data1) {
 
-    let authorCount = {'f':[],'m':[]};
-    let autrice_noms = {'name':[],'id':[]};
+    let authorCount = {
+        'f': [],
+        'm': []
+    };
+    let autrice_noms = {
+        'name': [],
+        'id': []
+    };
 
     let url_id = location.href.split("?id=")[1];
-    
+
     //Count the number of female and male authors appearing 
     for (var i = 0; i < data1.length; i++) {
-        if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id ) {
+        if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['f'].push(data1[i]["author_id_FK"]);
             autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
             //Get name of data and return as HTML element for the main h1 title
             let h1_text = data1[i]['Jeu de données'];
             document.getElementById("h1_title").innerHTML = h1_text;
-        } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id ) {
+        } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['m'].push(data1[i]["author_id_FK"]);
             //Get name of data and return as HTML element for the main h1 title
             let h1_text = data1[i]['Jeu de données'];
             document.getElementById("h1_title").innerHTML = h1_text;
-        }       
+        }
     }
 
     //authorCount : Detect duplicates and trim them into a new array
-    let trimmedCount = {'f':[],'m':[]};
+    let trimmedCount = {
+        'f': [],
+        'm': []
+    };
 
     for (let i = 0; i < authorCount['f'].length; i++) {
-        if ( trimmedCount['f'].indexOf(authorCount['f'][i]) === -1) {
+        if (trimmedCount['f'].indexOf(authorCount['f'][i]) === -1) {
             trimmedCount['f'].push(authorCount['f'][i]);
         }
     }
 
     for (let i = 0; i < authorCount['m'].length; i++) {
-        if ( trimmedCount['m'].indexOf(authorCount['m'][i]) === -1) {
+        if (trimmedCount['m'].indexOf(authorCount['m'][i]) === -1) {
             trimmedCount['m'].push(authorCount['m'][i]);
         }
     }
 
-    let autriceLinks = {'name':[],'id':[]};
+    let autriceLinks = {
+        'name': [],
+        'id': []
+    };
     let autriceMap = {};
 
     //Find and show links to female authors
-    for (let i = 0; i < autrice_noms['name'].length; i++){
+    for (let i = 0; i < autrice_noms['name'].length; i++) {
 
         autriceLinks['name'].push(autrice_noms['name'][i]);
         autriceLinks['id'].push(autrice_noms['id'][i]);
 
     }
-    
+
     console.log(autrice_noms)
     //Count female authors appearing to use for word cloud
-    autriceLinks['name'].forEach(function(x) { autriceMap[x] = (autriceMap[x] || 0)+1; });
+    autriceLinks['name'].forEach(function (x) {
+        autriceMap[x] = (autriceMap[x] || 0) + 1;
+    });
 
 
     //Detect duplicates into a new array
-    let values_already_seen = {'name':[],'id':[]};
-    
-    for (let i = 0; i< autrice_noms['name'].length; i++) {
-        if ( values_already_seen['name'].indexOf(autriceLinks['name'][i]) === -1) {
+    let values_already_seen = {
+        'name': [],
+        'id': []
+    };
+
+    for (let i = 0; i < autrice_noms['name'].length; i++) {
+        if (values_already_seen['name'].indexOf(autriceLinks['name'][i]) === -1) {
             values_already_seen['name'].push(autriceLinks['name'][i]);
             values_already_seen['id'].push(autriceLinks['id'][i]);
         }
@@ -77,12 +104,12 @@ $.get('../assets/data/data1.csv', function (csvString) {
 
     //Show links to female authors
     let autrice_nom_anchor = document.getElementById("autrice_nom");
-    
+
     // sorting by alphabetical order
     // values_already_seen;
 
     for (let i = 0; i < values_already_seen['name'].length; i++) {
-        let wordcloud_size = Math.ceil(10*Math.log(autriceMap[values_already_seen['name'][i]])+12);
+        let wordcloud_size = Math.ceil(10 * Math.log(autriceMap[values_already_seen['name'][i]]) + 12);
         //Replace space with non-breakable space
         // values_already_seen[i].replace('',/&nbsp;/g);
         autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
@@ -91,10 +118,10 @@ $.get('../assets/data/data1.csv', function (csvString) {
     //data for pie chart 
     data = {
         datasets: [{
-            data: [ trimmedCount['m'].length, trimmedCount['f'].length],
+            data: [trimmedCount['m'].length, trimmedCount['f'].length],
             backgroundColor: ["#f1dfd1", "#cca269"]
         }],
-    
+
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
             'Auteur',
@@ -112,7 +139,7 @@ $.get('../assets/data/data1.csv', function (csvString) {
             responsive: true,
             plugins: {
                 legend: {
-                position: 'top',
+                    position: 'top',
                 },
                 title: {
                     display: true,
@@ -128,25 +155,24 @@ $.get('../assets/data/data1.csv', function (csvString) {
                         dataArr.map(data => {
                             sum += data;
                         });
-                        let percentage = (value*100 / sum).toFixed(2)+"%";
+                        let percentage = (value * 100 / sum).toFixed(2) + "%";
                         return percentage;
                     },
                     color: '#000',
-                    font: { weight: 'bold', size: 24},
+                    font: {
+                        weight: 'bold',
+                        size: 24
+                    },
                 }
             }
         }
     });
 
-    function colorSize(wordcloud_size){
+    function colorSize(wordcloud_size) {
         if (wordcloud_size > 160) {
             return 160;
         } else {
             return wordcloud_size;
         }
     }
-    
-
-    
-
-});
+}
