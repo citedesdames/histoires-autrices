@@ -87,32 +87,45 @@ function loadData(data1) {
     });
 
 
-    //Detect duplicates into a new array
-    let values_already_seen = {
-        'name': [],
-        'id': []
-    };
+    //sort by alphabetical order
+
+    let alpha_data = [];
 
     for (let i = 0; i < autrice_noms['name'].length; i++) {
-        if (values_already_seen['name'].indexOf(autriceLinks['name'][i]) === -1) {
-            values_already_seen['name'].push(autriceLinks['name'][i]);
-            values_already_seen['id'].push(autriceLinks['id'][i]);
-        }
+        alpha_data[i] = {
+            name: autrice_noms['name'][i],
+            id: autrice_noms['id'][i]
+        };
     }
 
-    console.log(values_already_seen);
+    alpha_data.sort((a, b) => {
+        let fa = a.name.toLowerCase(),
+            fb = b.name.toLowerCase();
+
+        if (fa < fb) {
+            return -1;
+        }
+        if (fa > fb) {
+            return 1;
+        }
+        return 0;
+    });
+
+    //Detect duplicates into a new array
+    function getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }
+    let sorted_data = getUniqueListBy(alpha_data, 'name');
 
     //Show links to female authors
     let autrice_nom_anchor = document.getElementById("autrice_nom");
 
-    // sorting by alphabetical order
-    // values_already_seen;
 
-    for (let i = 0; i < values_already_seen['name'].length; i++) {
-        let wordcloud_size = Math.ceil(10 * Math.log(autriceMap[values_already_seen['name'][i]]) + 12);
+    for (let i = 0; i < sorted_data.length; i++) {
+        let wordcloud_size = Math.ceil(10 * Math.log(autriceMap[sorted_data[i].name]) + 12);
         //Replace space with non-breakable space
         // values_already_seen[i].replace('',/&nbsp;/g);
-        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/authors.html?key=${values_already_seen['id'][i]}">${values_already_seen['name'][i]} </a>`;
+        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/authors.html?key=${sorted_data[i].id}">${sorted_data[i].name} </a>`;
     }
 
     //data for pie chart 
