@@ -189,3 +189,8 @@ function loadData(data1) {
         }
     }
 }
+
+$(window).on("load", function () {
+    $(".loader").fadeOut("slow");
+    $("body").css("overflow", "visible");
+});
