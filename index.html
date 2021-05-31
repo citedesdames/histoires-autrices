@@ -10,6 +10,12 @@
     <script src="assets/papaparse.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="assets/script.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
 </head>
 
 <body>
@@ -21,7 +27,7 @@
                 <span></span>
             </button>
             <ul class="nav__list" id="navList">
-                <li class="nav__list__title" >Embarquement</li>
+                <li class="nav__list__title">Embarquement</li>
                 <li class="nav__list__link"><a href="#une">Destinations</a></li>
                 <li class="nav__list__link"><a href="#preface">Préface</a></li>
                 <li class="nav__list__title">Exploration</li>
@@ -43,6 +49,11 @@
             <ul id="flexLinks" class="une__flex">
             </ul>
         </section>
+        <section class="map">
+            <h2 class="map__title">Carte</h2>
+            <p class="map__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos velit amet aspernatur libero dolorum recusandae ea voluptatibus, labore dignissimos et in alias accusantium quod, aperiam beatae ab cumque, unde impedit.</p>
+            <div id="mapid" class="map__map"></div>
+        </section>
         <section class="preface" id="preface">
             <h2 class="preface__title">Préface</h2>
             <button class="preface__btn" id="siteBtn" onclick="showSite()">
@@ -59,9 +70,11 @@
                     oubliées du Panthéon littéraire.
                 </p>
                 <p class="preface__text">
-                    Développé à l'Université Paris-Est Marne-la-Vallée par Thi Van An Truong et <a href="http://leonardkim.web-edu.fr">Léonard Kim</a> dans le cadre des projets de
+                    Développé à l'Université Paris-Est Marne-la-Vallée par Thi Van An Truong et <a
+                        href="http://leonardkim.web-edu.fr">Léonard Kim</a> dans le cadre des projets de
                     recherche
-                    VisiAutrices (2017-2019) et Cité des dames (2019-2022), ce site web permet d'explorer des données ouvertes réunies pour la plupart par
+                    VisiAutrices (2017-2019) et Cité des dames (2019-2022), ce site web permet d'explorer des données
+                    ouvertes réunies pour la plupart par
                     l'association
                     George, le deuxième texte, par Laura Borie et Mallory Thiébaud pendant leur stage pour le projet
                     VisiAutrices,

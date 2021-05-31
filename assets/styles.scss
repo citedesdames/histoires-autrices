@@ -262,6 +262,27 @@ body {
     }
 }
 
+
+.map {
+    position: relative;
+    margin: 0 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    &__title {
+        @include h1Title();
+    }
+    &__text {
+        margin-bottom: 2rem;
+    }
+
+    &__map {
+        height: 90vh;
+        width: 90%;
+        align-self: center;
+    }
+}
+
 .une {
     position: relative;
     margin: 0 10%;

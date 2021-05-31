@@ -106,4 +106,13 @@ function loadData(data1) {
         flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset/dataset.html?id=${newdatasetLinks['id'][i]}">${newdatasetLinks['name'][i]}</a></li>`;
     }
 
+    //leaflet.js
+    var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+    // add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
 }

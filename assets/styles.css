@@ -223,6 +223,39 @@ body {
   background-color: #cab9a0;
 }
 
+.map {
+  position: relative;
+  margin: 0 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.map__title {
+  margin-top: 0;
+  font-family: 'Merriweather', serif;
+  font-size: 3rem;
+}
+
+.map__text {
+  margin-bottom: 2rem;
+}
+
+.map__map {
+  height: 90vh;
+  width: 90%;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
 .une {
   position: relative;
   margin: 0 10%;
