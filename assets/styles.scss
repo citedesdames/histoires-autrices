@@ -157,6 +157,7 @@ body {
         opacity: 0;
         right: -50rem;
         z-index: 1;
+        width: 50vw;
     }
 
     &__portait {
@@ -434,6 +435,19 @@ body {
 
     &__flex {
         @include flexContent();
+    }
+}
+
+.chart {
+    position: relative;
+    margin: 0 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 5rem;
+
+    &__title {
+        @include h1Title();
     }
 }
 

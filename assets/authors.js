@@ -145,10 +145,6 @@ function loadData(data1) {
     //render wikidata image
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(res => document.getElementById("hero__img").innerHTML = `<img class="hero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`, );
-
-
-
-
 }
 
 $(window).on("load", function () {

@@ -107,12 +107,15 @@ function loadData(data1) {
     }
 
     //leaflet.js
-    var map = L.map('mapid').setView([51.505, -0.09], 13);
+    var map = L.map('mapid').setView([46.2276, 2.2137], 6);
 
     // add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
         maxZoom: 20,
         attribution: '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+
+    // add map scale on lower left corner
+    L.control.scale().addTo(map);
 
 }
