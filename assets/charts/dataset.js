@@ -8,17 +8,31 @@
 //     dynamicTyping: true
 // }).data;
 var data1;
-Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
+//from Google Sheets
+// Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
+//local
+Papa.parse('../assets/data/data1.csv', {
     download: true,
     header: true,
     complete: function (results) {
         data1 = results.data;
-        console.log(data1);
-        loadData(data1);
+        // console.log(data1);
+        loadData(desc, data1);
     }
 });
 
-function loadData(data1) {
+var desc;
+Papa.parse('../assets/data/desc.csv', {
+    download: true,
+    header: true,
+    complete: function (results) {
+        desc = results.data;
+        // console.log(desc);
+        loadData(desc, data1);
+    }
+});
+
+function loadData(desc, data1) {
 
     let authorCount = {
         'f': [],
@@ -30,6 +44,20 @@ function loadData(data1) {
     };
 
     let url_id = location.href.split("?id=")[1];
+    let descText = "";
+    let h1_text = "";
+
+    // get database description and title
+    for (let i = 0; i < desc.length; i++) {
+        if ( desc[i]["id"] == url_id) {
+            descText = desc[i]["description"];
+            h1_text = desc[i]["name"];
+        }
+    }
+    console.log(descText);
+
+    document.getElementById("heroDesc").innerHTML = descText;
+    document.getElementById("h1_title").innerHTML = h1_text;
 
     //Count the number of female and male authors appearing 
     for (var i = 0; i < data1.length; i++) {
@@ -37,14 +65,8 @@ function loadData(data1) {
             authorCount['f'].push(data1[i]["author_id_FK"]);
             autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
-            //Get name of data and return as HTML element for the main h1 title
-            let h1_text = data1[i]['Jeu de données'];
-            document.getElementById("h1_title").innerHTML = h1_text;
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['m'].push(data1[i]["author_id_FK"]);
-            //Get name of data and return as HTML element for the main h1 title
-            let h1_text = data1[i]['Jeu de données'];
-            document.getElementById("h1_title").innerHTML = h1_text;
         }
     }
 
