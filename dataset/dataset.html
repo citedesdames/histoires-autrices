@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://raw.githubusercontent.com/chartjs/Chart.js/master/docs/scripts/utils.js"></script>
     <script src="../assets/charts/dataset.js"></script>
 </head>
 
@@ -28,7 +29,7 @@
             <img src="../assets/images/bg-hero.png" alt="" id="hero__img" class="hero__img">
         </section>
         <section class="data">
-            <h1 class="data__title"> La présence de nos héroïnes. </h1>
+            <h2 class="data__title"> La présence de nos héroïnes. </h2>
             <p class="data__text">Consultez la biographie de chacune des héroïnes figurées en cliquant sur son nom !</p>
             <div class="data__chart">
                 <div class="data__chart__container">
@@ -38,8 +39,8 @@
             </div>
         </section>
         <section class="chart">
-            <h1 class="chart__title">Les données</h1>
-            <div id="chart"></div>
+            <h2 class="chart__title">Les données</h2>
+            <div class="chart__container"><canvas id="barChart" width="600" height="400"></canvas></div>
         </section>
     </main>
 </body>

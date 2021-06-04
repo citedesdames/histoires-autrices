@@ -146,6 +146,22 @@ body {
   z-index: 2;
 }
 
+.authorHero {
+  height: 100vh;
+  position: relative;
+  padding: 0 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 .return__link {
   position: absolute;
   top: 3rem;
@@ -702,6 +718,11 @@ body {
   margin-top: 0;
   font-family: 'Merriweather', serif;
   font-size: 3rem;
+}
+
+.chart__container {
+  width: 50vw;
+  height: 50vh;
 }
 
 #visiautrices {
