@@ -57,7 +57,7 @@ var data1;
 //from Google Sheets
 // Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
 //local
-Papa.parse('../assets/data/data1.csv', {
+Papa.parse('assets/data/data1.csv', {
     download: true,
     header: true,
     complete: function (results) {
