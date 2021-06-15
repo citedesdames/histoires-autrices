@@ -63,11 +63,22 @@ Papa.parse('assets/data/data1.csv', {
     complete: function (results) {
         data1 = results.data;
         console.log(data1);
-        loadData(data1);
+        loadData(places, data1);
     }
 });
 
-function loadData(data1) {
+var places;
+Papa.parse('assets/data/places.csv', {
+    download: true,
+    header: true,
+    complete: function (results) {
+        places = results.data;
+        console.log(places);
+        loadData(places, data1);
+    }
+});
+
+function loadData(places, data1) {
 
     // Use PapaParse to convert string to array of objects
     // var data1 = Papa.parse(csvString, {

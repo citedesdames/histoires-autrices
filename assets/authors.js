@@ -27,6 +27,7 @@ Papa.parse('../assets/data/data1.csv', {
 });
 
 function loadData(data1) {
+    
     let url_key = location.href.split("?key=")[1];
 
     // console.log("id : " + url_key);
@@ -147,7 +148,7 @@ function loadData(data1) {
 
     //render wikidata image
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-    queryDispatcher.query(sparqlQuery).then(res => document.getElementById("hero__img").innerHTML = `<img class="hero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`, );
+    queryDispatcher.query(sparqlQuery).then(res => document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`, );
 }
 
 $(window).on("load", function () {

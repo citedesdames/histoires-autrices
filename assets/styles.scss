@@ -185,10 +185,37 @@ body {
 .authorHero {
     height: 100vh;
     position: relative;
-    padding: 0 10%;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
+
+    &__title {
+        font-family: 'Merriweather', serif;
+        font-size: 4rem;
+        margin-top: 0.75rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        z-index: 3;
+        color: #cca269;
+    }
+
+    &__text {
+        margin: 0;
+        z-index: 3;
+        text-align: center;
+    }
+
+    &__portait {
+        opacity: 1;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        z-index: 1;
+        border-radius: 100%;
+        border: 4px solid #ffffff;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
 }
 
 .return {
