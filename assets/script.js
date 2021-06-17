@@ -120,8 +120,24 @@ function loadData(places, data1) {
         flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset/dataset.html?id=${newdatasetLinks['id'][i]}">${newdatasetLinks['name'][i]}</a></li>`;
     }
 
+    
+    
     //leaflet.js
+    // example marker V
     var map = L.map('mapid').setView([46.2276, 2.2137], 6);
+    
+    for (let i = 0; i < 1130; i++) {
+        let regex = /Point| |[(]|[)]/g;
+        let locat = places[i]["P625"].split(regex);
+        // console.log(locat[3]);
+        if(locat[3] !== undefined ) {
+            var marker = L.marker([locat[3], locat[2]]).bindPopup(`<b>${places[i]["Nom d'élément selon Wikidata"]}</b>`)
+            marker.addTo(map);
+        }
+    }
+
+    // var marker = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.")
+    marker.addTo(map);
 
     // add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
