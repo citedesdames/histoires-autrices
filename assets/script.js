@@ -120,24 +120,48 @@ function loadData(places, data1) {
         flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset/dataset.html?id=${newdatasetLinks['id'][i]}">${newdatasetLinks['name'][i]}</a></li>`;
     }
 
-    
-    
+
+
     //leaflet.js
-    // example marker V
-    var map = L.map('mapid').setView([46.2276, 2.2137], 6);
+    var map = L.map('mapid', {
+        preferCanvas: true
+    }).setView([46.2276, 2.2137], 3);
+
+    //get authors birthplaces
+    let authorsPlaces = [];
+
+    for (let i = 0; i < data1.length; i++) {
+        authorsPlaces[i] = {
+            placename:data1[i]["birth_location"],
+            coordinates:data1[i]["birth_coordinates"],
+            authors:[]
+        }
+    }
     
-    for (let i = 0; i < 1130; i++) {
-        let regex = /Point| |[(]|[)]/g;
-        let locat = places[i]["P625"].split(regex);
-        // console.log(locat[3]);
-        if(locat[3] !== undefined ) {
-            var marker = L.marker([locat[3], locat[2]]).bindPopup(`<b>${places[i]["Nom d'élément selon Wikidata"]}</b>`)
-            marker.addTo(map);
+    // for (i in authorsPlaces) {
+    //     for (let i = 0; i < data1.length; i++) {
+    //         if (authorsPlaces[i]['placename'] == data1[i]["birth_location"] ) {
+    //             authorsPlaces[i]['authors'].push(data1[i]["Auteur ou autrice"]);
+    //         }
+    //     }
+    // }
+    
+    console.log(authorsPlaces);
+
+    //show authors birth location
+    for (let i = 0; i < data1.length; i++) {
+        if (data1[i]["Genre"] == 'F'){
+            let locat = data1[i]["birth_coordinates"].split(" ");
+            if (locat[0] !== undefined && locat[1] !== undefined) {
+                // console.log(locat[0])
+                var marker = L.circleMarker([locat[1], locat[0]]).bindPopup(`<b>${data1[i]["birth_location"]}</b><p>${data1[i]["Auteur ou autrice"]}</p>`)
+                marker.addTo(map);
+            }
         }
     }
 
     // var marker = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.")
-    marker.addTo(map);
+    // marker.addTo(map);
 
     // add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
