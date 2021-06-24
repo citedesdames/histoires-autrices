@@ -90,6 +90,10 @@ function loadData(places, data1) {
     //     dynamicTyping: true
     // }).data;
 
+    function getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }    
+
     let datasetLinks = {
         'name': [],
         'id': []
@@ -125,39 +129,55 @@ function loadData(places, data1) {
     //leaflet.js
     var map = L.map('mapid', {
         preferCanvas: true
+        
     }).setView([46.2276, 2.2137], 3);
 
-    //get authors birthplaces
-    let authorsPlaces = [];
+    map._layersMaxZoom = 19;
 
-    for (let i = 0; i < data1.length; i++) {
-        authorsPlaces[i] = {
-            placename:data1[i]["birth_location"],
-            coordinates:data1[i]["birth_coordinates"],
-            authors:[]
-        }
-    }
-    
-    // for (i in authorsPlaces) {
-    //     for (let i = 0; i < data1.length; i++) {
-    //         if (authorsPlaces[i]['placename'] == data1[i]["birth_location"] ) {
-    //             authorsPlaces[i]['authors'].push(data1[i]["Auteur ou autrice"]);
-    //         }
+    //get authors birthplaces
+    // let authorsPlaces = [];
+
+    // for (let i = 0; i < data1.length; i++) {
+    //     authorsPlaces[i] = {
+    //         placename:data1[i]["birth_location"],
+    //         coordinates:data1[i]["birth_coordinates"],
+    //         authors:[]
     //     }
     // }
     
-    console.log(authorsPlaces);
+    // // for (i in authorsPlaces) {
+    // //     for (let i = 0; i < data1.length; i++) {
+    // //         if (authorsPlaces[i]['placename'] == data1[i]["birth_location"] ) {
+    // //             authorsPlaces[i]['authors'].push(data1[i]["Auteur ou autrice"]);
+    // //         }
+    // //     }
+    // // }
+    
+    // console.log(authorsPlaces);
+
+    var markers = L.markerClusterGroup();
+
+    //get all female authors
+    let femaleAuthors = [];
+    for (let i = 0; i < data1.length; i++) {
+        if (data1[i]["Genre"] === 'F') {
+            femaleAuthors.push(data1[i]);
+        }
+    }
+
+    //remove duplicates
+    const trimmedAuthors = getUniqueListBy(femaleAuthors, 'author_id_FK')
+
+    console.log(trimmedAuthors);
 
     //show authors birth location
-    for (let i = 0; i < data1.length; i++) {
-        if (data1[i]["Genre"] == 'F'){
-            let locat = data1[i]["birth_coordinates"].split(" ");
+    for (let i = 0; i < trimmedAuthors.length; i++) {
+            let locat = trimmedAuthors[i]["birth_coordinates"].split(" ");
             if (locat[0] !== undefined && locat[1] !== undefined) {
-                // console.log(locat[0])
-                var marker = L.circleMarker([locat[1], locat[0]]).bindPopup(`<b>${data1[i]["birth_location"]}</b><p>${data1[i]["Auteur ou autrice"]}</p>`)
-                marker.addTo(map);
+                markers.addLayer(L.circleMarker([locat[1], locat[0]]).bindPopup(`<b>${trimmedAuthors[i]["birth_location"]}</b><p>${trimmedAuthors[i]["Auteur ou autrice"]}</p>`));
+                map.addLayer(markers);
             }
-        }
+        
     }
 
     // var marker = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.")

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "chartjs-plugin-stacked100": "^0.7.1"
+    "chartjs-plugin-stacked100": "^0.7.1",
+    "leaflet.markercluster": "^1.5.0"
   }
 }
