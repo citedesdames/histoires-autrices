@@ -27,7 +27,7 @@ Papa.parse('../assets/data/data1.csv', {
 });
 
 function loadData(data1) {
-    
+
     let url_key = location.href.split("?key=")[1];
 
     // console.log("id : " + url_key);
@@ -135,6 +135,7 @@ function loadData(data1) {
         }
     }
 
+    //get wikidata image
     const endpointUrl = 'https://query.wikidata.org/sparql';
     const sparqlQuery = `#defaultView:Table
     SELECT ?item ?itemLabel ?pic ?picLabel WHERE {
@@ -145,10 +146,25 @@ function loadData(data1) {
     }
     LIMIT 1`;
 
-
     //render wikidata image
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(res => document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`, );
+
+    //get wikidata reading materials
+    const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 WHERE {
+    ?livre wdt:P50 wd:Q${wikidataID};
+        wdt:P31 wd:Q3331189.
+    OPTIONAL{ ?livre wdt:P18 ?image. }
+    OPTIONAL{ ?livre wdt:P996 ?image2. }
+    ?pageLivre schema:about ?livre;
+        schema:isPartOf <https://fr.wikisource.org/>.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
+    }
+    GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2`;
+
+    const queryDispatcher2 = new SPARQLQueryDispatcher(endpointUrl);
+    queryDispatcher2.query(sparqlQuery2).then(console.log);
+
 }
 
 $(window).on("load", function () {
