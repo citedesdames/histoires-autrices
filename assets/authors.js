@@ -162,9 +162,11 @@ function loadData(data1) {
     }
     GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2`;
 
+    
     const queryDispatcher2 = new SPARQLQueryDispatcher(endpointUrl);
-    queryDispatcher2.query(sparqlQuery2).then(console.log);
-
+    queryDispatcher2.query(sparqlQuery2).then(res => document.getElementById("wikidataData").innerHTML = `<a class="wikidata__text" href="${res['results']['bindings'][0]['pageLivre']['value']}">${res['results']['bindings'][0]['livreLabel']['value']}</a>`);
+    
+    // document.getElementById("wikidata").innerHTML = ;
 }
 
 $(window).on("load", function () {

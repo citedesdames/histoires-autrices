@@ -457,7 +457,7 @@ body {
     }
 }
 
-.bnf {
+.bnf, .wikidata {
     position: relative;
     margin: 0 10%;
     display: flex;
@@ -473,6 +473,8 @@ body {
         @include flexContent();
     }
 }
+
+
 
 .chart {
     position: relative;
