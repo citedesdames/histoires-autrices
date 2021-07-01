@@ -151,20 +151,41 @@ function loadData(data1) {
     queryDispatcher.query(sparqlQuery).then(res => document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`, );
 
     //get wikidata reading materials
-    const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 WHERE {
-    ?livre wdt:P50 wd:Q${wikidataID};
-        wdt:P31 wd:Q3331189.
-    OPTIONAL{ ?livre wdt:P18 ?image. }
-    OPTIONAL{ ?livre wdt:P996 ?image2. }
-    ?pageLivre schema:about ?livre;
-        schema:isPartOf <https://fr.wikisource.org/>.
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
-    }
-    GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2`;
+    const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel WHERE {
+        ?livre  wdt:P50 wd:Q${wikidataID};
+          wdt:P31 wd:Q3331189.
+        OPTIONAL { ?livre wdt:P18 ?image. }
+        OPTIONAL { ?livre wdt:P996 ?image2. }
+        OPTIONAL { ?livre wdt:P123 ?publisher. }
+        OPTIONAL { ?livre wdt:P577 ?date. }
+        OPTIONAL { ?livre wdt:P291 ?place. }
+        ?pageLivre schema:about ?livre;
+          schema:isPartOf <https://fr.wikisource.org/>.
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
+      }
+      GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel`;
 
-    
+
     const queryDispatcher2 = new SPARQLQueryDispatcher(endpointUrl);
-    queryDispatcher2.query(sparqlQuery2).then(res => document.getElementById("wikidataData").innerHTML = `<a class="wikidata__text" href="${res['results']['bindings'][0]['pageLivre']['value']}">${res['results']['bindings'][0]['livreLabel']['value']}</a>`);
+
+    queryDispatcher2.query(sparqlQuery2).then(res => {
+        console.log(res);
+        let elem = document.getElementById("wikidataData");
+
+        //if wikidata array is empty, hide
+        if (res['results']['bindings'].length == 0) {
+            console.log('yes');
+            document.getElementsByClassName("wikidata")[0].style.display = 'none';
+        } else {
+            elem.insertAdjacentHTML("beforebegin", `<h2 class="wikidata__title">Les œuvres auxquelles elle a donné vie…</h2>
+            <p class="wikidata__text">Plongez aussi dans ses œuvres sur Wikidata.</p>`);
+        }
+        
+        for (let i = 0; i < res['results']['bindings'].length; i++) {
+            elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `
+        }
+    });
+    
     
     // document.getElementById("wikidata").innerHTML = ;
 }

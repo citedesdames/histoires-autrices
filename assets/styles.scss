@@ -422,13 +422,14 @@ body {
         &__text {
             width: 50%;
             color: #666 !important;
+            text-align: center;
 
             &__link {
                 text-decoration: none;
                 font-size: 1.5rem;
                 transition: .2s;
                 transition-timing-function: ease-in-out;
-
+                
                 &:hover {
                     color: #000000;
                     text-decoration: none;
