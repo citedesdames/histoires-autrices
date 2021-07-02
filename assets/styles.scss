@@ -493,6 +493,35 @@ body {
         width: 50vw;
         height: 50vh;
     }
+
+    &__bubble {
+        background-color: #AAAAAA;
+        width: 100%;
+        height: 500px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 10px;
+
+        &__column {
+            background-color: #cab9a0;
+            margin: 2rem;
+            display: inline-block;
+            &__dot {
+                width: 5%;
+                height: 5%;
+                margin: 1%;
+                background-color: #ffffff;
+                z-index: 1;
+                position: relative;
+                display: inline-block;
+                a {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                }
+            }
+        }
+    }
 }
 
 // JAVASCRIPT
