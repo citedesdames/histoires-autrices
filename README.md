@@ -1,2 +1,5 @@
 # histoires-autrices
-A history of female authors, recreated entirely from scratch, in HTML, CSS and vanilla JS.
+
+Stories of female authors, recreated entirely from scratch, in HTML, CSS and vanilla JS.
+
+View deployment on GitHub Pages : https://dongjounkim.github.io/histoires-autrices/
