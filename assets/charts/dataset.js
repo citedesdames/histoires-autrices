@@ -145,7 +145,7 @@ function loadData(desc, data1) {
 
     for (let i = 0; i < sorted_data.length; i++) {
         let wordcloud_size = Math.ceil(10 * Math.log(autriceMap[sorted_data[i].name]) + 12);
-        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/authors.html?key=${sorted_data[i].id}">${sorted_data[i].name.replace(/ /ig,"&nbsp;")}</a> `;
+        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/?key=${sorted_data[i].id}">${sorted_data[i].name.replace(/ /ig,"&nbsp;")}</a> `;
         // .replace(/ /ig,"&nbsp;")
     }
 

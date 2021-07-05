@@ -43,6 +43,9 @@ function loadData(data1) {
             document.getElementById("h1_title").innerHTML = h1_text;
             document.getElementById("author_title").innerHTML = h1_text;
 
+            //change HTML DOM page title dynamically
+            document.title = h1_text + " - Histoires d'Autrices";
+
             //Get name of data to use later as Gallica identifier
             gallicaName = data1[i]['Nom normalisé'];
 
@@ -71,7 +74,7 @@ function loadData(data1) {
 
     //Render dataset links
     for (let i = 0; i < trimmedValues['dataset'].length; i++) {
-        datasetLink = `<li class="dataset__flex__item"><a href="../dataset/dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
+        datasetLink = `<li class="dataset__flex__item"><a href="../dataset/?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
     }
     console.log(gallicaName);

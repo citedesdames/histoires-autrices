@@ -121,7 +121,7 @@ function loadData(places, data1) {
     //render dataset links
     let flexLinks = document.getElementById('flexLinks');
     for (let i = 0; i < newdatasetLinks['name'].length; i++) {
-        flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset/dataset.html?id=${newdatasetLinks['id'][i]}">${newdatasetLinks['name'][i]}</a></li>`;
+        flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset/?id=${newdatasetLinks['id'][i]}">${newdatasetLinks['name'][i]}</a></li>`;
     }
 
 
@@ -175,12 +175,12 @@ function loadData(places, data1) {
             let birthLocat = trimmedAuthors[i]["birth_coordinates"].split(" ");
             let deathLocat = trimmedAuthors[i]["death_coordinates"].split(" ");
             if (birthLocat[0] !== undefined && birthLocat[1] !== undefined) {
-                markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({fillColor: 'green'}).bindPopup(`<p>${trimmedAuthors[i]["Auteur ou autrice"]}</p>Née à <b>${trimmedAuthors[i]["birth_location"]}</b>`));
+                markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({fillColor: 'green'}).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Née à <b>${trimmedAuthors[i]["birth_location"]}</b>`));
                 map.addLayer(markers);
             }
 
             if (deathLocat[0] !== undefined && deathLocat[1] !== undefined) {
-                markers.addLayer(L.circleMarker([deathLocat[1], deathLocat[0]]).setStyle({fillColor: 'red'}).bindPopup(`<p>${trimmedAuthors[i]["Auteur ou autrice"]}</p>Décédée à <b>${trimmedAuthors[i]["death_location"]}</b>`));
+                markers.addLayer(L.circleMarker([deathLocat[1], deathLocat[0]]).setStyle({fillColor: 'red'}).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Décédée à <b>${trimmedAuthors[i]["death_location"]}</b>`));
                 map.addLayer(markers);
             } 
         
