@@ -333,4 +333,9 @@ function loadData(desc, data1) {
 $(window).on("load", function () {
     $(".loader").fadeOut("slow");
     $("body").css("overflow", "visible");
+    $("#menuButton").click(function () {
+        console.log("Clicked on menu button");
+        $("#navList").toggle();
+        // transform", "translate3d(-100px,0, 0)"
+    });
 });
