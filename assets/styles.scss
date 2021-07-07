@@ -77,6 +77,19 @@
     }
 }
 
+@media only screen and (max-width: 425px) {
+
+    .hero {
+        &__title {
+            font-size: 2.5rem !important;
+        }
+        &:after {
+            background: rgba(247, 246, 244, 0) 50%;
+        }
+    }
+   
+}
+
 * {
     box-sizing: border-box;
 }

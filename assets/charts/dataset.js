@@ -54,7 +54,7 @@ function loadData(desc, data1) {
             h1_text = desc[i]["name"];
         }
     }
-    console.log(descText);
+    console.log(data1);
 
     document.getElementById("heroDesc").innerHTML = descText;
     document.getElementById("h1_title").innerHTML = h1_text;
@@ -62,11 +62,11 @@ function loadData(desc, data1) {
     //Count the number of female and male authors appearing 
     for (var i = 0; i < data1.length; i++) {
         if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id) {
-            authorCount['f'].push(data1[i]["author_id_FK"]);
+            authorCount['f'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
             autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
-            authorCount['m'].push(data1[i]["author_id_FK"]);
+            authorCount['m'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
         }
     }
 
@@ -204,40 +204,34 @@ function loadData(desc, data1) {
 
 
     //horizontal bar chart with chart.js
-    
-    const DATA_COUNT = 7;
-    const NUMBER_CFG = {
-        count: DATA_COUNT,
-        min: 0,
-        max: 100
-    };
 
-    const labels = Utils.months({
-        count: 7
-    });
+    console.log(trimmedCount)
+
+    let tot = trimmedCount['f'].length + trimmedCount['m'].length;
+    let barRes = (trimmedCount['f'].length*100)/tot;
+    
+    console.log(barRes);
+
     const data2 = {
-        labels: labels,
+        labels: ['YEAR XXXX'],
         datasets: [{
-                label: 'Dataset 1',
-                data: Utils.numbers(NUMBER_CFG),
-                backgroundColor: Utils.CHART_COLORS.red,
+                label: 'Autrice',
+                data: [barRes],
+                backgroundColor: '#cca269', 
+                stack: 's0'
             },
             {
-                label: 'Dataset 2',
-                data: Utils.numbers(NUMBER_CFG),
-                backgroundColor: Utils.CHART_COLORS.blue,
-            },
-            {
-                label: 'Dataset 3',
-                data: Utils.numbers(NUMBER_CFG),
-                backgroundColor: Utils.CHART_COLORS.green,
-            },
+                label: 'Auteurs',
+                data: [100-barRes],
+                backgroundColor: '#f1dfd1',
+                stack: 's0'
+            }
         ]
     };
 
     var ctx2 = document.getElementById("barChart").getContext('2d');
     var chart2 = new Chart(ctx2, {
-        type: 'bar',
+        type: 'horizontalBar',
         data: data2,
         options: {
             indexAxis: "y",
@@ -258,6 +252,8 @@ function loadData(desc, data1) {
             }
         }
     });
+
+
 
 
 
