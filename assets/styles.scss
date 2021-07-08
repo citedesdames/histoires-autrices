@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto&display=swap');
 
-@mixin flexContent {
+@mixin flexContent($showmore: false) {
     display: flex;
     flex-wrap: wrap;
     padding: 0;
@@ -21,6 +21,16 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        display: block;
+
+        @if $showmore {
+            display: none;
+
+            &:nth-child(-n+9) {
+                display: block;
+            }
+        }
+
 
         &:nth-child(3n) {
             margin-right: 0;
@@ -31,6 +41,10 @@
             margin-bottom: 1.5rem;
             z-index: 1;
             width: auto;
+        }
+
+        @media only screen and (max-width: 768px) {
+            min-width: 100%;
         }
     }
 
@@ -59,6 +73,10 @@
     margin-top: 0;
     font-family: 'Merriweather', serif;
     font-size: 3rem;
+
+    @media only screen and (max-width: 768px) {
+        font-size: 2.2rem !important;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -80,14 +98,32 @@
 @media only screen and (max-width: 425px) {
 
     .hero {
-        &__title {
-            font-size: 2.5rem !important;
-        }
         &:after {
             background: rgba(247, 246, 244, 0) 50%;
         }
+
+        &__img {
+            right: -160px !important;
+            width: 90vw !important;
+        }
     }
-   
+
+    .authorHero, .hero {
+        &__title {
+            font-size: 2.5rem !important;
+        }
+    }
+
+    .data {
+        &__chart {
+            flex-direction: column;
+            &__container {
+                width: 100vw !important;
+                height: 50vw !important;
+            }
+        }
+    }
+
 }
 
 * {
@@ -319,9 +355,11 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
+
     &__title {
         @include h2Title();
     }
+
     &__text {
         margin-bottom: 2rem;
     }
@@ -442,7 +480,7 @@ body {
                 font-size: 1.5rem;
                 transition: .2s;
                 transition-timing-function: ease-in-out;
-                
+
                 &:hover {
                     color: #000000;
                     text-decoration: none;
@@ -461,9 +499,7 @@ body {
     margin-bottom: 5rem;
 
     &__title {
-        margin-top: 0;
-        font-family: 'Merriweather', serif;
-        font-size: 3rem;
+        @include h2Title();
     }
 
     &__flex {
@@ -471,7 +507,8 @@ body {
     }
 }
 
-.bnf, .wikidata {
+.bnf,
+.wikidata {
     position: relative;
     margin: 0 10%;
     display: flex;
@@ -484,10 +521,9 @@ body {
     }
 
     &__flex {
-        @include flexContent();
+        @include flexContent($showmore: true);
     }
 }
-
 
 
 .chart {
@@ -519,6 +555,7 @@ body {
             background-color: #cab9a0;
             margin: 2rem;
             display: inline-block;
+
             &__dot {
                 width: 5%;
                 height: 5%;
@@ -527,6 +564,7 @@ body {
                 z-index: 1;
                 position: relative;
                 display: inline-block;
+
                 a {
                     width: 100%;
                     height: 100%;

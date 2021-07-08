@@ -117,6 +117,24 @@ function loadData(data1) {
             worksLink = `<li class="bnf__flex__item"><a href="${trimmedGallica['link'][i]}"><img class="bnf__flex__item__img" src="${trimmedGallica['thumbnail'][i]}.jpg">${trimmedGallica['title'][i]}</a></li>`;
             document.getElementById("worksLinks").innerHTML += worksLink;
         }
+
+        const loadmore2 = document.querySelector('#loadmore2');
+        let currentItems = 9;
+        loadmore2.addEventListener('click', (e) => {
+            const elementList = [...document.querySelectorAll('.bnf__flex__item')];
+            console.log(elementList);
+            for (let i = currentItems; i < currentItems + 9; i++) {
+                if (elementList[i]) {
+                    elementList[i].style.display = 'block';
+                }
+            }
+            currentItems += 9;
+
+            // Load more button will be hidden after list fully loaded
+            if (currentItems >= elementList.length) {
+                event.target.style.display = 'none';
+            }
+        })
     });
 
     //Get author's portrait image from wikidata
@@ -183,14 +201,34 @@ function loadData(data1) {
             elem.insertAdjacentHTML("beforebegin", `<h2 class="wikidata__title">Les œuvres auxquelles elle a donné vie…</h2>
             <p class="wikidata__text">Plongez aussi dans ses œuvres sur Wikidata.</p>`);
         }
-        
+
         for (let i = 0; i < res['results']['bindings'].length; i++) {
             elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `
         }
+
+        // Count the number of wikidata items
+        let wikidataNmb = document.getElementsByClassName("wikidata__flex__item").length;
+
+        // Load more button
+        const loadmore = document.querySelector('#loadmore');
+        let currentItems = 9;
+        loadmore.addEventListener('click', (e) => {
+            const elementList = [...document.querySelectorAll('.wikidata__flex__item')];
+            console.log(elementList);
+            for (let i = currentItems; i < currentItems + 9; i++) {
+                if (elementList[i]) {
+                    elementList[i].style.display = 'block';
+                }
+            }
+            currentItems += 9;
+
+            // Load more button will be hidden after list fully loaded
+            if (currentItems >= elementList.length) {
+                event.target.style.display = 'none';
+            }
+        })
     });
-    
-    
-    // document.getElementById("wikidata").innerHTML = ;
+
 }
 
 $(window).on("load", function () {

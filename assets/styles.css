@@ -14,11 +14,25 @@
 }
 
 @media only screen and (max-width: 425px) {
-  .hero__title {
-    font-size: 2.5rem !important;
-  }
   .hero:after {
     background: rgba(247, 246, 244, 0) 50%;
+  }
+  .hero__img {
+    right: -160px !important;
+    width: 90vw !important;
+  }
+  .authorHero__title, .hero__title {
+    font-size: 2.5rem !important;
+  }
+  .data__chart {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .data__chart__container {
+    width: 100vw !important;
+    height: 50vw !important;
   }
 }
 
@@ -301,6 +315,12 @@ body {
   font-size: 3rem;
 }
 
+@media only screen and (max-width: 768px) {
+  .map__title {
+    font-size: 2.2rem !important;
+  }
+}
+
 .map__text {
   margin-bottom: 2rem;
 }
@@ -332,6 +352,12 @@ body {
   margin-top: 0;
   font-family: 'Merriweather', serif;
   font-size: 3rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .une__title {
+    font-size: 2.2rem !important;
+  }
 }
 
 .une__text {
@@ -403,6 +429,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  display: block;
 }
 
 .une__flex__item:nth-child(3n) {
@@ -414,6 +441,12 @@ body {
   margin-bottom: 1.5rem;
   z-index: 1;
   width: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .une__flex__item {
+    min-width: 100%;
+  }
 }
 
 .une__flex__item:hover {
@@ -460,6 +493,12 @@ body {
   font-size: 3rem;
 }
 
+@media only screen and (max-width: 768px) {
+  .preface__title {
+    font-size: 2.2rem !important;
+  }
+}
+
 .preface__text:last-of-type {
   margin-bottom: 0;
 }
@@ -496,6 +535,12 @@ body {
   margin-top: 0;
   font-family: 'Merriweather', serif;
   font-size: 3rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .data__title {
+    font-size: 2.2rem !important;
+  }
 }
 
 .data__chart {
@@ -557,6 +602,12 @@ body {
   font-size: 3rem;
 }
 
+@media only screen and (max-width: 768px) {
+  .dataset__title {
+    font-size: 2.2rem !important;
+  }
+}
+
 .dataset__flex {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -593,6 +644,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  display: block;
 }
 
 .dataset__flex__item:nth-child(3n) {
@@ -604,6 +656,12 @@ body {
   margin-bottom: 1.5rem;
   z-index: 1;
   width: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .dataset__flex__item {
+    min-width: 100%;
+  }
 }
 
 .dataset__flex__item:hover {
@@ -637,7 +695,8 @@ body {
   z-index: 2;
 }
 
-.bnf, .wikidata {
+.bnf,
+.wikidata {
   position: relative;
   margin: 0 10%;
   display: -webkit-box;
@@ -653,13 +712,22 @@ body {
   margin-bottom: 5rem;
 }
 
-.bnf__title, .wikidata__title {
+.bnf__title,
+.wikidata__title {
   margin-top: 0;
   font-family: 'Merriweather', serif;
   font-size: 3rem;
 }
 
-.bnf__flex, .wikidata__flex {
+@media only screen and (max-width: 768px) {
+  .bnf__title,
+  .wikidata__title {
+    font-size: 2.2rem !important;
+  }
+}
+
+.bnf__flex,
+.wikidata__flex {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -673,7 +741,8 @@ body {
   width: 100%;
 }
 
-.bnf__flex__item, .wikidata__flex__item {
+.bnf__flex__item,
+.wikidata__flex__item {
   width: calc((100% / 3) - (2rem / 3));
   min-height: 200px;
   min-width: 130px;
@@ -695,27 +764,45 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  display: block;
+  display: none;
 }
 
-.bnf__flex__item:nth-child(3n), .wikidata__flex__item:nth-child(3n) {
+.bnf__flex__item:nth-child(-n+9),
+.wikidata__flex__item:nth-child(-n+9) {
+  display: block;
+}
+
+.bnf__flex__item:nth-child(3n),
+.wikidata__flex__item:nth-child(3n) {
   margin-right: 0;
 }
 
-.bnf__flex__item__img, .wikidata__flex__item__img {
+.bnf__flex__item__img,
+.wikidata__flex__item__img {
   height: 192px;
   margin-bottom: 1.5rem;
   z-index: 1;
   width: auto;
 }
 
-.bnf__flex__item:hover, .wikidata__flex__item:hover {
+@media only screen and (max-width: 768px) {
+  .bnf__flex__item,
+  .wikidata__flex__item {
+    min-width: 100%;
+  }
+}
+
+.bnf__flex__item:hover,
+.wikidata__flex__item:hover {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
           box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
-.bnf__flex__item a, .wikidata__flex__item a {
+.bnf__flex__item a,
+.wikidata__flex__item a {
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -759,6 +846,12 @@ body {
   margin-top: 0;
   font-family: 'Merriweather', serif;
   font-size: 3rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .chart__title {
+    font-size: 2.2rem !important;
+  }
 }
 
 .chart__container {

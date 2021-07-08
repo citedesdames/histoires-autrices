@@ -16,6 +16,10 @@ docReady(function () {
             right: -200,
             opacity: 0.3
         }, 1000);
+    } else {
+        $("#hero__img").animate({
+            opacity: 0.3
+        }, 1000);
     }
 
     $("#menuButton").click(function () {
