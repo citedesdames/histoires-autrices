@@ -34,6 +34,11 @@ Papa.parse('../assets/data/desc.csv', {
 
 function loadData(desc, data1) {
 
+    //Detect duplicates in array of objects into a new array
+    function getUniqueListBy(arr, key) {
+        return [...new Map(arr.map(item => [item[key], item])).values()]
+    }
+
     let authorCount = {
         'f': [],
         'm': []
@@ -59,16 +64,32 @@ function loadData(desc, data1) {
     document.getElementById("heroDesc").innerHTML = descText;
     document.getElementById("h1_title").innerHTML = h1_text;
 
+    // document.getElementById("bubbleF").innerHTML = bubbleFHTML;
+    
     //Count the number of female and male authors appearing 
+    let bubbleF = [];
     for (var i = 0; i < data1.length; i++) {
         if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id) {
+            bubbleFobject = {};
+            
             authorCount['f'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
             autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
+
+            bubbleFobject.src = data1[i]["src"];
+            bubbleFobject.name = data1[i]["Nom normalisé"];
+            bubbleF.push(bubbleFobject);
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['m'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
         }
     }
+    console.log(bubbleF);
+
+    //bubbleF : Detect duplicates and trim them into a new array
+
+    const trimmedBubbleF = getUniqueListBy(bubbleF, 'name')
+
+    console.log(trimmedBubbleF)
 
     //authorCount : Detect duplicates and trim them into a new array
     let trimmedCount = {
@@ -133,10 +154,6 @@ function loadData(desc, data1) {
         return 0;
     });
 
-    //Detect duplicates into a new array
-    function getUniqueListBy(arr, key) {
-        return [...new Map(arr.map(item => [item[key], item])).values()]
-    }
     let sorted_data = getUniqueListBy(alpha_data, 'name');
 
     //Show links to female authors
