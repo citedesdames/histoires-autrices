@@ -63,8 +63,6 @@ function loadData(desc, data1) {
 
     document.getElementById("heroDesc").innerHTML = descText;
     document.getElementById("h1_title").innerHTML = h1_text;
-
-    // document.getElementById("bubbleF").innerHTML = bubbleFHTML;
     
     //Count the number of female and male authors appearing 
     let bubbleF = [];
@@ -76,8 +74,10 @@ function loadData(desc, data1) {
             autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
 
+            // Create an array of objects fot the bubble chart
             bubbleFobject.src = data1[i]["src"];
             bubbleFobject.name = data1[i]["Nom normalisé"];
+            bubbleFobject.details = data1[i]["details"];
             bubbleF.push(bubbleFobject);
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['m'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
@@ -87,9 +87,14 @@ function loadData(desc, data1) {
 
     //bubbleF : Detect duplicates and trim them into a new array
 
-    const trimmedBubbleF = getUniqueListBy(bubbleF, 'name')
+    let trimmedBubbleF = getUniqueListBy(bubbleF, 'name')
 
     console.log(trimmedBubbleF)
+
+    //render bubbles (female authors)
+    for (let i = 0; i<trimmedBubbleF.length;i++) {
+        document.getElementById("bubbleF").innerHTML += `<span class="chart__bubble__column__dot"><a href="${trimmedBubbleF[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleF[i]['details']}</p><p>${trimmedBubbleF[i]['name']}</p></span></span>`
+    }
 
     //authorCount : Detect duplicates and trim them into a new array
     let trimmedCount = {

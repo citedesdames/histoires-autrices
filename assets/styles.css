@@ -856,7 +856,7 @@ body {
 
 .chart__container {
   width: 50vw;
-  height: 50vh;
+  min-height: 50vh;
 }
 
 .chart__bubble {
@@ -877,11 +877,10 @@ body {
 }
 
 .chart__bubble__column__dot {
-  width: 5%;
-  height: 5%;
-  margin: 1%;
+  width: 30px;
+  height: 30px;
+  margin: 3px;
   background-color: #ffffff;
-  z-index: 1;
   position: relative;
   display: inline-block;
 }
@@ -890,6 +889,32 @@ body {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.chart__bubble__column__dot:hover .chart__bubble__column__dot__tooltip {
+  visibility: visible;
+  z-index: 999;
+}
+
+.chart__bubble__column__dot__tooltip {
+  visibility: hidden;
+  min-width: 400px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 999;
+}
+
+.chart__bubble__column__dot__tooltip p:nth-child(1) {
+  margin-top: 0;
+}
+
+.chart__bubble__column__dot__tooltip p:nth-child(2) {
+  margin: 0;
 }
 
 #visiautrices {

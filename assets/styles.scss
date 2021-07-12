@@ -540,7 +540,7 @@ body {
 
     &__container {
         width: 50vw;
-        height: 50vh;
+        min-height: 50vh;
     }
 
     &__bubble {
@@ -557,11 +557,10 @@ body {
             display: inline-block;
 
             &__dot {
-                width: 5%;
-                height: 5%;
-                margin: 1%;
+                width: 30px;
+                height: 30px;
+                margin: 3px;
                 background-color: #ffffff;
-                z-index: 1;
                 position: relative;
                 display: inline-block;
 
@@ -570,6 +569,34 @@ body {
                     height: 100%;
                     display: block;
                 }
+
+                &:hover &__tooltip {
+                    visibility: visible;
+                    z-index: 999;
+                }
+
+                &__tooltip {
+                    visibility: hidden;
+                    min-width: 400px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                  
+                    /* Position the tooltip */
+                    position: absolute;
+                    z-index: 999;
+
+                    p:nth-child(1) {
+                        margin-top: 0;
+                    }
+                    p:nth-child(2) {
+                        margin: 0;
+                    }
+                }
+
+
             }
         }
     }
