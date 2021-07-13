@@ -11,6 +11,10 @@
     margin-right: 0 !important;
     margin-bottom: 1rem !important;
   }
+  .chart__bubble {
+    -ms-grid-columns: (1fr)[1] !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+  }
 }
 
 @media only screen and (max-width: 425px) {
@@ -712,6 +716,29 @@ body {
   margin-bottom: 5rem;
 }
 
+.bnf__btn,
+.wikidata__btn {
+  cursor: pointer;
+  background-color: #cca269;
+  border: none;
+  font: inherit;
+  padding: 2rem;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  display: block;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.bnf__btn:hover,
+.wikidata__btn:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
 .bnf__title,
 .wikidata__title {
   margin-top: 0;
@@ -862,7 +889,6 @@ body {
 .chart__bubble {
   background-color: #AAAAAA;
   width: 100%;
-  height: 500px;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[2];
@@ -877,9 +903,9 @@ body {
 }
 
 .chart__bubble__column__dot {
-  width: 30px;
-  height: 30px;
-  margin: 3px;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
   background-color: #ffffff;
   position: relative;
   display: inline-block;
@@ -898,14 +924,16 @@ body {
 
 .chart__bubble__column__dot__tooltip {
   visibility: hidden;
-  min-width: 400px;
+  min-width: 300px;
   background-color: black;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
+  pointer-events: none;
   /* Position the tooltip */
   position: absolute;
+  right: -150px;
   z-index: 999;
 }
 

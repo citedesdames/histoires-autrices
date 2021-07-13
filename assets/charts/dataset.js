@@ -63,37 +63,49 @@ function loadData(desc, data1) {
 
     document.getElementById("heroDesc").innerHTML = descText;
     document.getElementById("h1_title").innerHTML = h1_text;
-    
-    //Count the number of female and male authors appearing 
+
+    //Count the number of female and male authors appearing and create array of objects from src files to generate the bubble chart
     let bubbleF = [];
+    let bubbleM = [];
     for (var i = 0; i < data1.length; i++) {
         if (data1[i].Genre == "F" && data1[i]['dataset_id_FK'] == url_id) {
             bubbleFobject = {};
-            
+
             authorCount['f'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
             autrice_noms['name'].push(data1[i]["Nom normalisé"]);
             autrice_noms['id'].push(data1[i]["author_id_FK"]);
 
-            // Create an array of objects fot the bubble chart
+            // Create an array of objects fot the bubble chart (female)
             bubbleFobject.src = data1[i]["src"];
             bubbleFobject.name = data1[i]["Nom normalisé"];
             bubbleFobject.details = data1[i]["details"];
             bubbleF.push(bubbleFobject);
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['m'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
+
+            bubbleMobject = {};
+            bubbleMobject.src = data1[i]["src"];
+            bubbleMobject.name = data1[i]["Nom normalisé"];
+            bubbleMobject.details = data1[i]["details"];
+            bubbleM.push(bubbleMobject);
         }
     }
-    console.log(bubbleF);
 
-    //bubbleF : Detect duplicates and trim them into a new array
+    //bubbleF & bubbleM : Detect duplicates and trim them into a new array
 
-    let trimmedBubbleF = getUniqueListBy(bubbleF, 'name')
+    let trimmedBubbleF = getUniqueListBy(bubbleF, 'name');
+    let trimmedBubbleM = getUniqueListBy(bubbleM, 'name');
 
-    console.log(trimmedBubbleF)
+    console.log(trimmedBubbleM)
 
     //render bubbles (female authors)
-    for (let i = 0; i<trimmedBubbleF.length;i++) {
+    for (let i = 0; i < trimmedBubbleF.length; i++) {
         document.getElementById("bubbleF").innerHTML += `<span class="chart__bubble__column__dot"><a href="${trimmedBubbleF[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleF[i]['details']}</p><p>${trimmedBubbleF[i]['name']}</p></span></span>`
+    }
+
+    //render bubbles (male authors)
+    for (let i = 0; i < trimmedBubbleM.length; i++) {
+        document.getElementById("bubbleM").innerHTML += `<span class="chart__bubble__column__dot"><a href="${trimmedBubbleM[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleM[i]['details']}</p><p>${trimmedBubbleM[i]['name']}</p></span></span>`
     }
 
     //authorCount : Detect duplicates and trim them into a new array
@@ -230,8 +242,8 @@ function loadData(desc, data1) {
     console.log(trimmedCount)
 
     let tot = trimmedCount['f'].length + trimmedCount['m'].length;
-    let barRes = (trimmedCount['f'].length*100)/tot;
-    
+    let barRes = (trimmedCount['f'].length * 100) / tot;
+
     console.log(barRes);
 
     const data2 = {
@@ -239,12 +251,12 @@ function loadData(desc, data1) {
         datasets: [{
                 label: 'Autrice',
                 data: [barRes],
-                backgroundColor: '#cca269', 
+                backgroundColor: '#cca269',
                 stack: 's0'
             },
             {
                 label: 'Auteurs',
-                data: [100-barRes],
+                data: [100 - barRes],
                 backgroundColor: '#f1dfd1',
                 stack: 's0'
             }

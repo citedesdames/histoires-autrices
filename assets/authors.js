@@ -122,13 +122,16 @@ function loadData(data1) {
         let currentItems = 9;
         loadmore2.addEventListener('click', (e) => {
             const elementList = [...document.querySelectorAll('.bnf__flex__item')];
-            console.log(elementList);
+            document.getElementById('itemsLeftBNF').innerHTML = `${elementList.length} restants`;
             for (let i = currentItems; i < currentItems + 9; i++) {
                 if (elementList[i]) {
                     elementList[i].style.display = 'block';
                 }
             }
             currentItems += 9;
+            let itemsLeft = elementList.length - currentItems;
+            document.getElementById('itemsLeftBNF').innerHTML = `${itemsLeft} restants`;
+
 
             // Load more button will be hidden after list fully loaded
             if (currentItems >= elementList.length) {
@@ -206,12 +209,11 @@ function loadData(data1) {
             elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `
         }
 
-        // Count the number of wikidata items
-        let wikidataNmb = document.getElementsByClassName("wikidata__flex__item").length;
 
         // Load more button
         const loadmore = document.querySelector('#loadmore');
         let currentItems = 9;
+
         loadmore.addEventListener('click', (e) => {
             const elementList = [...document.querySelectorAll('.wikidata__flex__item')];
             console.log(elementList);
@@ -227,6 +229,13 @@ function loadData(data1) {
                 event.target.style.display = 'none';
             }
         })
+
+        // Count the number of bnf gallica items
+        bnfNmb = document.getElementsByClassName("bnf__flex__item").length - currentItems;
+        console.log(bnfNmb);
+
+        document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
+
     });
 
 }
