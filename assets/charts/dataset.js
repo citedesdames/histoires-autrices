@@ -244,7 +244,12 @@ function loadData(desc, data1) {
     let tot = trimmedCount['f'].length + trimmedCount['m'].length;
     let barRes = (trimmedCount['f'].length * 100) / tot;
 
-    console.log(barRes);
+    let years = [];
+    for (let i = 0; i<trimmedCount['m'].length;i++) {
+
+        years.push(trimmedCount['m'][i].split(';')[1]);
+    }
+    console.log(years)
 
     const data2 = {
         labels: ['YEAR XXXX'],
