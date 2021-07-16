@@ -567,6 +567,7 @@ body {
     &__container {
         width: 50vw;
         min-height: 50vh;
+        margin-top: 10%;
     }
 
     &__bubble {
@@ -575,6 +576,7 @@ body {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-column-gap: 10px;
+        margin-top: 10%;
 
         &__column {
             background-color: #cab9a0;

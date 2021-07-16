@@ -139,7 +139,7 @@ function loadData(places, data1) {
     map._layersMaxZoom = 19;
 
     //get authors birthplaces
-    // let authorsPlaces = [];
+    let authorsPlaces = {};
 
     // for (let i = 0; i < data1.length; i++) {
     //     authorsPlaces[i] = {

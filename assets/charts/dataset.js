@@ -61,6 +61,47 @@ function loadData(desc, data1) {
     }
     console.log(data1);
 
+    //Counting number of female and male authors per year ================================================================
+
+    let nbsPerYear = {};
+    for (var i = 0; i < data1.length; i++) {
+        if (data1[i]['dataset_id_FK'] == url_id) {
+
+            if (!(data1[i]['year'] in nbsPerYear)) {
+                nbsPerYear[data1[i]['year']] = [0, 0];
+            }
+            if (data1[i]['Genre'] == 'M') {
+                nbsPerYear[data1[i]['year']][1]++;
+            }
+            if (data1[i]['Genre'] == 'F') {
+                nbsPerYear[data1[i]['year']][0]++;
+            }
+        }
+    }
+    console.log(nbsPerYear)
+
+    //=================================================================
+
+    //creating arrays for bar chart
+    let years = Object.keys(nbsPerYear);
+    let femalePerYear = [];
+    let malePerYear = [];
+
+    // for (let i=0; i<years.length; i++) {
+    //     femalePerYear.push(nbsPerYear[years[i]][0])
+    //     malePerYear.push(nbsPerYear[years[i]][1])
+    // }
+
+    for (const year in nbsPerYear) {
+        femalePerYear.push(nbsPerYear[year][0])
+        malePerYear.push(nbsPerYear[year][1])
+    }
+
+    console.log(femalePerYear);
+
+
+
+
     document.getElementById("heroDesc").innerHTML = descText;
     document.getElementById("h1_title").innerHTML = h1_text;
 
@@ -244,24 +285,24 @@ function loadData(desc, data1) {
     let tot = trimmedCount['f'].length + trimmedCount['m'].length;
     let barRes = (trimmedCount['f'].length * 100) / tot;
 
-    let years = [];
-    for (let i = 0; i<trimmedCount['m'].length;i++) {
+    // let years = [];
+    // for (let i = 0; i < trimmedCount['m'].length; i++) {
 
-        years.push(trimmedCount['m'][i].split(';')[1]);
-    }
-    console.log(years)
+    //     years.push(trimmedCount['m'][i].split(';')[1]);
+    // }
+    // console.log(years)
 
     const data2 = {
-        labels: ['YEAR XXXX'],
+        labels: years,
         datasets: [{
                 label: 'Autrice',
-                data: [barRes],
+                data: femalePerYear,
                 backgroundColor: '#cca269',
                 stack: 's0'
             },
             {
                 label: 'Auteurs',
-                data: [100 - barRes],
+                data: malePerYear,
                 backgroundColor: '#f1dfd1',
                 stack: 's0'
             }

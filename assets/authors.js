@@ -138,6 +138,13 @@ function loadData(data1) {
                 event.target.style.display = 'none';
             }
         })
+
+
+        // Count the number of bnf gallica items
+        let bnfNmb = document.getElementsByClassName("bnf__flex__item").length - currentItems;
+        console.log(bnfNmb);
+
+        document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
     });
 
     //Get author's portrait image from wikidata
@@ -162,17 +169,22 @@ function loadData(data1) {
     //get wikidata image
     const endpointUrl = 'https://query.wikidata.org/sparql';
     const sparqlQuery = `#defaultView:Table
-    SELECT ?item ?itemLabel ?pic ?picLabel WHERE {
+    SELECT ?item ?itemLabel ?pic ?picLabel ?birthdate ?birthdateLabel ?deathdate ?deathdateLabel WHERE {
       wd:Q${wikidataID} wdt:P18 ?pic.
       ?item wdt:P18 ?pic.
       SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
       ?item wdt:P31 wd:Q5.
+      OPTIONAL { ?item wdt:P569 ?birthdate. }
+      OPTIONAL { ?item wdt:P570 ?deathdate. }
     }
     LIMIT 1`;
 
     //render wikidata image
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-    queryDispatcher.query(sparqlQuery).then(res => document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`, );
+    queryDispatcher.query(sparqlQuery).then(res => {
+        console.log(res);
+        document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`
+    });
 
     //get wikidata reading materials
     const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel WHERE {
@@ -205,8 +217,9 @@ function loadData(data1) {
             <p class="wikidata__text">Plongez aussi dans ses œuvres sur Wikidata.</p>`);
         }
 
+
         for (let i = 0; i < res['results']['bindings'].length; i++) {
-            elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `
+            elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `;
         }
 
 
@@ -229,12 +242,6 @@ function loadData(data1) {
                 event.target.style.display = 'none';
             }
         })
-
-        // Count the number of bnf gallica items
-        bnfNmb = document.getElementsByClassName("bnf__flex__item").length - currentItems;
-        console.log(bnfNmb);
-
-        document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
 
     });
 

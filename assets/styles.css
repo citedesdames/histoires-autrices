@@ -884,6 +884,7 @@ body {
 .chart__container {
   width: 50vw;
   min-height: 50vh;
+  margin-top: 10%;
 }
 
 .chart__bubble {
@@ -894,6 +895,7 @@ body {
   -ms-grid-columns: (1fr)[2];
       grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
+  margin-top: 10%;
 }
 
 .chart__bubble__column {
