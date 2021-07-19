@@ -179,11 +179,30 @@ function loadData(data1) {
     }
     LIMIT 1`;
 
+    //Generate in French name of months from wikidata (used with getMonth() function)
+    var month = new Array();
+    month[0] = "Janvier";
+    month[1] = "Février";
+    month[2] = "Mars";
+    month[3] = "Avril";
+    month[4] = "Mai";
+    month[5] = "Juin";
+    month[6] = "Juillet";
+    month[7] = "Août";
+    month[8] = "Septembre";
+    month[9] = "Octobre";
+    month[10] = "Novembre";
+    month[11] = "Decembre";
+    
     //render wikidata image
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(res => {
         console.log(res);
         document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`
+        let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']); 
+        let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']); 
+        document.getElementById("dob").innerHTML = `Née le : ${dob.getDate()} ${month[dob.getMonth()]} ${dob.getFullYear()}<br>`
+        document.getElementById("dod").innerHTML = `Décédée le : ${dod.getDate()} ${month[dod.getMonth()]} ${dod.getFullYear()}`
     });
 
     //get wikidata reading materials

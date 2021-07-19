@@ -96,7 +96,7 @@ function loadData(places, data1) {
 
     function getUniqueListBy(arr, key) {
         return [...new Map(arr.map(item => [item[key], item])).values()]
-    }    
+    }
 
     let datasetLinks = {
         'name': [],
@@ -133,13 +133,28 @@ function loadData(places, data1) {
     //leaflet.js
     var map = L.map('mapid', {
         preferCanvas: true
-        
+
     }).setView([46.2276, 2.2137], 3);
 
     map._layersMaxZoom = 19;
 
-    //get authors birthplaces
-    let authorsPlaces = {};
+    //get authors birthplaces======================================================================================
+    let authorsPlaces = {placename: '', authors: []};
+    let trimmedAuthorsPlaces = {placename: '', authors: []};
+    for (let i = 0; i < data1.length; i++) {
+        if (!(data1[i]['birth_coordinates'] in authorsPlaces)) {
+            authorsPlaces[data1[i]['birth_coordinates']] = {placename : data1[i]['birth_location'], authors:[]};
+        }
+        authorsPlaces[data1[i]['birth_coordinates']]['authors'].push(data1[i]['author_id_FK'])
+        for (data1[i]['birth_coordinates'] in authorsPlaces) {
+            if (trimmedAuthorsPlaces['authors'].indexOf(authorsPlaces['authors'][i]) === -1) {
+                trimmedAuthorsPlaces['authors'].push(authorsPlaces['authors'][i]);
+            }
+        }
+    }
+    
+    console.log(authorsPlaces);
+
 
     // for (let i = 0; i < data1.length; i++) {
     //     authorsPlaces[i] = {
@@ -148,7 +163,7 @@ function loadData(places, data1) {
     //         authors:[]
     //     }
     // }
-    
+
     // // for (i in authorsPlaces) {
     // //     for (let i = 0; i < data1.length; i++) {
     // //         if (authorsPlaces[i]['placename'] == data1[i]["birth_location"] ) {
@@ -156,7 +171,7 @@ function loadData(places, data1) {
     // //         }
     // //     }
     // // }
-    
+
     // console.log(authorsPlaces);
 
     var markers = L.markerClusterGroup();
@@ -176,18 +191,22 @@ function loadData(places, data1) {
 
     //show authors birth location
     for (let i = 0; i < trimmedAuthors.length; i++) {
-            let birthLocat = trimmedAuthors[i]["birth_coordinates"].split(" ");
-            let deathLocat = trimmedAuthors[i]["death_coordinates"].split(" ");
-            if (birthLocat[0] !== undefined && birthLocat[1] !== undefined) {
-                markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({fillColor: 'green'}).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Née à <b>${trimmedAuthors[i]["birth_location"]}</b>`));
-                map.addLayer(markers);
-            }
+        let birthLocat = trimmedAuthors[i]["birth_coordinates"].split(" ");
+        let deathLocat = trimmedAuthors[i]["death_coordinates"].split(" ");
+        if (birthLocat[0] !== undefined && birthLocat[1] !== undefined) {
+            markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({
+                fillColor: 'green'
+            }).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Née à <b>${trimmedAuthors[i]["birth_location"]}</b>`));
+            map.addLayer(markers);
+        }
 
-            if (deathLocat[0] !== undefined && deathLocat[1] !== undefined) {
-                markers.addLayer(L.circleMarker([deathLocat[1], deathLocat[0]]).setStyle({fillColor: 'red'}).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Décédée à <b>${trimmedAuthors[i]["death_location"]}</b>`));
-                map.addLayer(markers);
-            } 
-        
+        if (deathLocat[0] !== undefined && deathLocat[1] !== undefined) {
+            markers.addLayer(L.circleMarker([deathLocat[1], deathLocat[0]]).setStyle({
+                fillColor: 'red'
+            }).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Décédée à <b>${trimmedAuthors[i]["death_location"]}</b>`));
+            map.addLayer(markers);
+        }
+
     }
 
     // var marker = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.")

@@ -562,6 +562,10 @@ body {
 
     &__title {
         @include h2Title();
+
+        &:nth-of-type(2) {
+            margin-top: 10% !important;
+        }
     }
 
     &__container {
