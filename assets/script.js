@@ -138,44 +138,6 @@ function loadData(places, data1) {
 
     map._layersMaxZoom = 19;
 
-    //get authors birthplaces======================================================================================
-    let authorsPlaces = {placename: '', authors: []};
-    let trimmedAuthorsPlaces = {placename: '', authors: []};
-    for (let i = 0; i < data1.length; i++) {
-        if (!(data1[i]['birth_coordinates'] in authorsPlaces)) {
-            authorsPlaces[data1[i]['birth_coordinates']] = {placename : data1[i]['birth_location'], authors:[]};
-        }
-        authorsPlaces[data1[i]['birth_coordinates']]['authors'].push(data1[i]['author_id_FK'])
-        for (data1[i]['birth_coordinates'] in authorsPlaces) {
-            if (trimmedAuthorsPlaces['authors'].indexOf(authorsPlaces['authors'][i]) === -1) {
-                trimmedAuthorsPlaces['authors'].push(authorsPlaces['authors'][i]);
-            }
-        }
-    }
-    
-    console.log(authorsPlaces);
-
-
-    // for (let i = 0; i < data1.length; i++) {
-    //     authorsPlaces[i] = {
-    //         placename:data1[i]["birth_location"],
-    //         coordinates:data1[i]["birth_coordinates"],
-    //         authors:[]
-    //     }
-    // }
-
-    // // for (i in authorsPlaces) {
-    // //     for (let i = 0; i < data1.length; i++) {
-    // //         if (authorsPlaces[i]['placename'] == data1[i]["birth_location"] ) {
-    // //             authorsPlaces[i]['authors'].push(data1[i]["Auteur ou autrice"]);
-    // //         }
-    // //     }
-    // // }
-
-    // console.log(authorsPlaces);
-
-    var markers = L.markerClusterGroup();
-
     //get all female authors
     let femaleAuthors = [];
     for (let i = 0; i < data1.length; i++) {
@@ -189,25 +151,58 @@ function loadData(places, data1) {
 
     console.log(trimmedAuthors);
 
-    //show authors birth location
+    //get authors birthplaces======================================================================================
+    var markers = L.markerClusterGroup();
+
+    let authorsPlaces = {};
     for (let i = 0; i < trimmedAuthors.length; i++) {
-        let birthLocat = trimmedAuthors[i]["birth_coordinates"].split(" ");
-        let deathLocat = trimmedAuthors[i]["death_coordinates"].split(" ");
+        if (!(trimmedAuthors[i]['birth_coordinates'] in authorsPlaces)) {
+            authorsPlaces[trimmedAuthors[i]['birth_coordinates']] = {
+                placename: trimmedAuthors[i]['birth_location'],
+                authors: {
+                    authorname: [],
+                    id: []
+                }
+            };
+        }
+        authorsPlaces[trimmedAuthors[i]['birth_coordinates']]['authors']['authorname'].push(trimmedAuthors[i]['Auteur ou autrice']);
+        authorsPlaces[trimmedAuthors[i]['birth_coordinates']]['authors']['id'].push(trimmedAuthors[i]['author_id_FK']);
+
+    }
+    for (let q = 2; q < Object.keys(authorsPlaces).length; q++) {
+        let birthLocat = Object.keys(authorsPlaces)[q].split(" ")
+        console.log(Object.keys(authorsPlaces).length)
+
         if (birthLocat[0] !== undefined && birthLocat[1] !== undefined) {
             markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({
                 fillColor: 'green'
-            }).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Née à <b>${trimmedAuthors[i]["birth_location"]}</b>`));
+            }).bindPopup(`<p><a href="../authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id']}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname']}</a></p>Née à <b>${authorsPlaces[Object.keys(authorsPlaces)[q]]['placename']}</b>`));
             map.addLayer(markers);
         }
-
-        if (deathLocat[0] !== undefined && deathLocat[1] !== undefined) {
-            markers.addLayer(L.circleMarker([deathLocat[1], deathLocat[0]]).setStyle({
-                fillColor: 'red'
-            }).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Décédée à <b>${trimmedAuthors[i]["death_location"]}</b>`));
-            map.addLayer(markers);
-        }
-
     }
+
+    console.log(authorsPlaces);
+
+    //show authors birth location
+    // for (let i = 0; i < trimmedAuthors.length; i++) {
+    //     let birthLocat = trimmedAuthors[i]["birth_coordinates"].split(" ");
+    //     let deathLocat = trimmedAuthors[i]["death_coordinates"].split(" ");
+    //     // if (birthLocat[0] !== undefined && birthLocat[1] !== undefined) {
+    //     //     markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({
+    //     //         fillColor: 'green'
+    //     //     }).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Née à <b>${trimmedAuthors[i]["birth_location"]}</b>`));
+    //     //     map.addLayer(markers);
+    //     // }
+
+    //     if (deathLocat[0] !== undefined && deathLocat[1] !== undefined) {
+    //         markers.addLayer(L.circleMarker([deathLocat[1], deathLocat[0]]).setStyle({
+    //             fillColor: 'red'
+    //         }).bindPopup(`<p><a href="../authors/?key=${trimmedAuthors[i]["author_id_FK"]}">${trimmedAuthors[i]["Auteur ou autrice"]}</a></p>Décédée à <b>${trimmedAuthors[i]["death_location"]}</b>`));
+    //         map.addLayer(markers);
+    //     }
+
+    // }
+
 
     // var marker = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.")
     // marker.addTo(map);
