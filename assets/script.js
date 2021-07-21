@@ -169,19 +169,31 @@ function loadData(places, data1) {
         authorsPlaces[trimmedAuthors[i]['birth_coordinates']]['authors']['id'].push(trimmedAuthors[i]['author_id_FK']);
 
     }
-    for (let q = 2; q < Object.keys(authorsPlaces).length; q++) {
+
+    for (let q = 0; q < Object.keys(authorsPlaces).length; q++) {
+        // Splits links of authors
+        let authorsLinks = '';
+        for ( let i = 0; i<authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'].length; i++) {
+            authorsLinks += `<a href="../authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i]}</a> `;
+        }
+
+        console.log(authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'])
+        console.log(authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'])
         let birthLocat = Object.keys(authorsPlaces)[q].split(" ")
-        console.log(Object.keys(authorsPlaces).length)
 
         if (birthLocat[0] !== undefined && birthLocat[1] !== undefined) {
             markers.addLayer(L.circleMarker([birthLocat[1], birthLocat[0]]).setStyle({
                 fillColor: 'green'
-            }).bindPopup(`<p><a href="../authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id']}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname']}</a></p>Née à <b>${authorsPlaces[Object.keys(authorsPlaces)[q]]['placename']}</b>`));
+            }).bindPopup(`<p>${authorsLinks}</p>Née à <b>${authorsPlaces[Object.keys(authorsPlaces)[q]]['placename']}</b>`));
             map.addLayer(markers);
         }
+        console.log(authorsLinks)
     }
 
-    console.log(authorsPlaces);
+    // for (let i = 0; i < authorsPlaces[Object.keys(authorsPlaces)]['authors']['id'].length; i++) {
+        
+    //     console.log(authorsPlaces[Object.keys(authorsPlaces)[i]]['authors']['id']);
+    // }
 
     //show authors birth location
     // for (let i = 0; i < trimmedAuthors.length; i++) {
