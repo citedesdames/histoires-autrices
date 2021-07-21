@@ -174,7 +174,7 @@ function loadData(places, data1) {
         // Splits links of authors
         let authorsLinks = '';
         for ( let i = 0; i<authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'].length; i++) {
-            authorsLinks += `<a href="/authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i]}</a> `;
+            authorsLinks += `<a href="authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i]}</a> `;
         }
 
         console.log(authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'])
