@@ -726,7 +726,7 @@ body {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-  display: block;
+  display: none;
   -webkit-transition: .2s;
   transition: .2s;
 }
@@ -952,6 +952,10 @@ body {
 }
 
 #visiautrices {
+  display: none;
+}
+
+#wikidataText, #bnfText {
   display: none;
 }
 /*# sourceMappingURL=styles.css.map */

@@ -83,12 +83,25 @@ function loadData(data1) {
 
     // Gallica JSON data
     $.getJSON(urlGallica, function (dataGallica) {
+        const loadmore2 = document.querySelector('#loadmore2');
+
         // JSON result in `dataGallica` variable
         let tbGallica = {
             'title': [],
             'thumbnail': [],
             'link': []
         };
+
+        //if bnf array is empty, hide
+        if (dataGallica['results']['bindings'].length == 0) {
+            console.log('yes');
+            document.getElementsByClassName("bnf")[0].style.display = 'none';
+        } else {
+            // show wikidata h2 p button
+            document.getElementById("bnfText").style.display = 'block';
+            document.getElementById("loadmore2").style.display = 'block';
+        }
+
         for (let i = 0; i < dataGallica['results']['bindings'].length; i++) {
             // if (dataGallica['results']['bindings'][i]) {
             tbGallica['thumbnail'].push(dataGallica['results']['bindings'][i]['fichierGallica']['value'] + '/thumbnail');
@@ -118,7 +131,8 @@ function loadData(data1) {
             document.getElementById("worksLinks").innerHTML += worksLink;
         }
 
-        const loadmore2 = document.querySelector('#loadmore2');
+
+
         let currentItems = 9;
         loadmore2.addEventListener('click', (e) => {
             const elementList = [...document.querySelectorAll('.bnf__flex__item')];
@@ -139,11 +153,15 @@ function loadData(data1) {
             }
         })
 
-
+        
         // Count the number of bnf gallica items
         let bnfNmb = document.getElementsByClassName("bnf__flex__item").length - currentItems;
         console.log(bnfNmb);
-
+        
+        //hide button if bnfNmb is less or equal to 0
+        if (bnfNmb <= 0) {
+            loadmore2.style.display = 'none';
+        }
         document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
     });
 
@@ -193,14 +211,14 @@ function loadData(data1) {
     month[9] = "Octobre";
     month[10] = "Novembre";
     month[11] = "Decembre";
-    
-    //render wikidata image
+
+    //render wikidata image + date of birth/death
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(res => {
         console.log(res);
         document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`
-        let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']); 
-        let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']); 
+        let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']);
+        let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']);
         document.getElementById("dob").innerHTML = `Née le : ${dob.getDate()} ${month[dob.getMonth()]} ${dob.getFullYear()}<br>`
         document.getElementById("dod").innerHTML = `Décédée le : ${dod.getDate()} ${month[dod.getMonth()]} ${dod.getFullYear()}`
     });
@@ -232,8 +250,9 @@ function loadData(data1) {
             console.log('yes');
             document.getElementsByClassName("wikidata")[0].style.display = 'none';
         } else {
-            elem.insertAdjacentHTML("beforebegin", `<h2 class="wikidata__title">Les œuvres auxquelles elle a donné vie…</h2>
-            <p class="wikidata__text">Plongez aussi dans ses œuvres sur Wikidata.</p>`);
+            // show wikidata h2 p button
+            document.getElementById("wikidataText").style.display = 'block';
+            document.getElementById("loadmore").style.display = 'block';
         }
 
 

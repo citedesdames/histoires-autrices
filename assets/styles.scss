@@ -7,7 +7,7 @@
     font: inherit;
     padding: 2rem;
     align-self: center;
-    display: block;
+    display: none;
     transition: .2s;
 
     &:hover {
@@ -637,5 +637,9 @@ body {
 
 // JAVASCRIPT
 #visiautrices {
+    display: none;
+}
+
+#wikidataText, #bnfText {
     display: none;
 }
