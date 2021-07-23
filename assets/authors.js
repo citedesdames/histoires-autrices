@@ -79,9 +79,10 @@ function loadData(data1) {
     }
     console.log(gallicaName);
 
-    let urlGallica = `https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.org/dc/terms/%3E%20%0APREFIX%20foaf:%20%3Chttp://xmlns.com/foaf/0.1/%3E%20%0APREFIX%20rdarelationships:%20%3Chttp://rdvocab.info/RDARelationshipsWEMI/%3E%20%0ASELECT%20?auteur%20?expression%20?manifestation%20?titreManifestation%20?dateManifestation%20?fichierGallica%20?imgGallica%0AWHERE%20%7B%0A?auteur%20foaf:name%20%22${gallicaName}%22.%0A?expression%20dcterms:contributor%20?auteur.%20%0A?manifestation%20dcterms:date%20?dateManifestation.%20%0A?manifestation%20dcterms:title%20?titreManifestation.%20%0A?manifestation%20rdarelationships:expressionManifested%20?expression.%20%0A?manifestation%20rdarelationships:electronicReproduction%20?fichierGallica.%20%0A%7D%20%0AORDER%20BY%20ASC(?dateManifestation)%0A&format=application/json`;
 
-    // Gallica JSON data
+    // Gallica BNF data ==================================================================================================
+
+    let urlGallica = `https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.org/dc/terms/%3E%20%0APREFIX%20foaf:%20%3Chttp://xmlns.com/foaf/0.1/%3E%20%0APREFIX%20rdarelationships:%20%3Chttp://rdvocab.info/RDARelationshipsWEMI/%3E%20%0ASELECT%20?auteur%20?expression%20?manifestation%20?titreManifestation%20?dateManifestation%20?fichierGallica%20?imgGallica%0AWHERE%20%7B%0A?auteur%20foaf:name%20%22${gallicaName}%22.%0A?expression%20dcterms:contributor%20?auteur.%20%0A?manifestation%20dcterms:date%20?dateManifestation.%20%0A?manifestation%20dcterms:title%20?titreManifestation.%20%0A?manifestation%20rdarelationships:expressionManifested%20?expression.%20%0A?manifestation%20rdarelationships:electronicReproduction%20?fichierGallica.%20%0A%7D%20%0AORDER%20BY%20ASC(?dateManifestation)%0A&format=application/json`;
     $.getJSON(urlGallica, function (dataGallica) {
         const loadmore2 = document.querySelector('#loadmore2');
 
@@ -151,13 +152,18 @@ function loadData(data1) {
             if (currentItems >= elementList.length) {
                 event.target.style.display = 'none';
             }
+
+            // Hide button if bnfNmb is less or equal to 0
+            if (bnfNmb <= 0) {
+                loadmore2.style.display = 'none';
+            }
         })
 
-        
+
         // Count the number of bnf gallica items
         let bnfNmb = document.getElementsByClassName("bnf__flex__item").length - currentItems;
         console.log(bnfNmb);
-        
+
         //hide button if bnfNmb is less or equal to 0
         if (bnfNmb <= 0) {
             loadmore2.style.display = 'none';
@@ -165,6 +171,8 @@ function loadData(data1) {
         document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
     });
 
+
+    // WIKIDATA===========================================================================================================
     //Get author's portrait image from wikidata
     let dataGallica = [];
     class SPARQLQueryDispatcher {
@@ -257,7 +265,11 @@ function loadData(data1) {
 
 
         for (let i = 0; i < res['results']['bindings'].length; i++) {
-            elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `;
+            // if (res['results']['bindings'][i]['livreLabel']) {
+            //     elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}${res['results']['bindings'][i]['publisherLabel']['value'].replace(/ /,"&nbsp;")}<a></li> `;
+            // } else {
+                elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `;
+            // }
         }
 
 
@@ -274,12 +286,28 @@ function loadData(data1) {
                 }
             }
             currentItems += 9;
+            let itemsLeft = elementList.length - currentItems;
+            document.getElementById('itemsLeftWikidata').innerHTML = `${itemsLeft} restants`;
 
-            // Load more button will be hidden after list fully loaded
+            // "Load more" button will be hidden after list fully loaded
             if (currentItems >= elementList.length) {
                 event.target.style.display = 'none';
             }
+
+            //hide button if wikidataNmb is less or equal to 0
+            if (wikidataNmb <= 0) {
+                loadmore.style.display = 'none';
+            }
         })
+
+        // Count the number of wikidata items
+        let wikidataNmb = document.getElementsByClassName("wikidata__flex__item").length - currentItems;
+
+        //hide button if wikidataNmb is less or equal to 0
+        if (wikidataNmb <= 0) {
+            loadmore.style.display = 'none';
+        }
+        document.getElementById('itemsLeftWikidata').innerHTML = `${wikidataNmb} restants`;
 
     });
 

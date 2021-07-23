@@ -187,7 +187,7 @@ function loadData(places, data1) {
         // Splits links of authors
         let authorsLinks = '';
         for ( let i = 0; i<authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'].length; i++) {
-            authorsLinks += `<a href="authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i]}</a> `;
+            authorsLinks += `<a href="authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i].replace(/ /,"&nbsp;")}</a> `;
         }
         let birthLocat = Object.keys(authorsPlaces)[q].split(" ")
 
@@ -204,7 +204,7 @@ function loadData(places, data1) {
         // Splits links of authors
         let authorsLinks = '';
         for ( let i = 0; i<deathPlaces[Object.keys(deathPlaces)[q]]['authors']['id'].length; i++) {
-            authorsLinks += `<a href="authors/?key=${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['id'][i]}">${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['authorname'][i]}</a> `;
+            authorsLinks += `<a href="authors/?key=${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['id'][i]}">${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['authorname'][i].replace(/ /,"&nbsp;")}</a> `;
         }
         let birthLocat = Object.keys(deathPlaces)[q].split(" ")
 

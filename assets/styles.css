@@ -887,25 +887,28 @@ body {
 
 .chart__container {
   width: 50vw;
-  min-height: 50vh;
-  margin-top: 10%;
+}
+
+.chart__container:nth-of-type(1) {
+  margin-bottom: 1rem;
 }
 
 .chart__bubble {
-  background-color: #AAAAAA;
+  background-color: #cca269;
   width: 100%;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[2];
       grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 .chart__bubble__column {
-  background-color: #cab9a0;
+  background-color: #f1dfd1;
   margin: 2rem;
   display: inline-block;
+  padding: 1rem;
 }
 
 .chart__bubble__column__dot {
@@ -915,6 +918,8 @@ body {
   background-color: #ffffff;
   position: relative;
   display: inline-block;
+  border: #cca269 solid 2px;
+  border-radius: 100%;
 }
 
 .chart__bubble__column__dot a {

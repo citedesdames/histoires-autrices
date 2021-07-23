@@ -82,7 +82,7 @@ function loadData(desc, data1) {
 
     //=================================================================
 
-    //creating arrays for bar chart
+    // creating arrays for bar chart
     let years = Object.keys(nbsPerYear);
     let femalePerYear = [];
     let malePerYear = [];
@@ -99,7 +99,36 @@ function loadData(desc, data1) {
 
     console.log(femalePerYear);
 
+    //=================================================================
+    // create array of decades 
+    let decades = [];
+    let femalePerDecade = [];
+    let malePerDecade = [];
 
+    function decadeMaker(year) {
+        let firstYear = year-(year%10);
+        let lastYear = firstYear+9;
+
+        return `${firstYear} - ${lastYear}`;
+    }
+
+    for (let i = 0; i < years.length ; i++) {
+        let decade = decadeMaker(years[i]);
+        if (decades[decades.length-1] !== decade) {
+            // creates new decade 
+            decades.push(decade);
+            femalePerDecade.push(femalePerYear[i]);
+            malePerDecade.push(malePerYear[i]);
+        } else {
+            femalePerDecade[femalePerDecade.length-1] += femalePerYear[i];
+            malePerDecade[malePerDecade.length-1] += malePerYear[i];
+        }
+
+    }
+    
+    console.log(femalePerDecade);
+
+    //=================================================================
 
 
     document.getElementById("heroDesc").innerHTML = descText;
@@ -239,8 +268,17 @@ function loadData(desc, data1) {
 
     };
 
+    let barchartHeight = document.getElementById("barChart").style.height = (10 + 2 * years.length) + 'vh';
+
+    let barchartHeightDecade = document.getElementById("barChartDecade").style.height = (10 + 2 * decades.length) + 'vh';
+
+    if (decades.length <= 5) {
+        document.getElementById('barChartDecade').style.display = "none";
+        document.getElementById('decadeText').style.display = "none";
+    }
+
     //Generate a pie chart with chart.js 
-    var ctx = document.getElementById("mychart").getContext('2d');
+    var ctx = document.getElementById("pieChart").getContext('2d');
     var chart = new Chart(ctx, {
         type: 'pie',
         data: data,
@@ -278,31 +316,56 @@ function loadData(desc, data1) {
     });
 
 
-    //horizontal bar chart with chart.js
+    // Generate horizontal bar charts with chart.js
 
-    console.log(trimmedCount)
+    // percentages for females authors
+    let barResYearF = [];
+    let barResYearM = [];
 
-    let tot = trimmedCount['f'].length + trimmedCount['m'].length;
-    let barRes = (trimmedCount['f'].length * 100) / tot;
+    for (let i = 0; i < years.length ; i++) {
+        let yearTotal = femalePerYear[i] + malePerYear[i];
+        barResYearF.push((Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
+        barResYearM.push(100-(Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
+    }
 
-    // let years = [];
-    // for (let i = 0; i < trimmedCount['m'].length; i++) {
+    let barResDecadeF = [];
+    let barResDecadeM = [];
 
-    //     years.push(trimmedCount['m'][i].split(';')[1]);
-    // }
-    // console.log(years)
+    for (let i = 0; i < decades.length ; i++) {
+        let decadeTotal = femalePerDecade[i] + malePerDecade[i];
+        barResDecadeF.push((Math.round((femalePerDecade[i] * 100) / decadeTotal)*10)/10);
+        barResDecadeM.push(100-(Math.round((femalePerDecade[i] * 100) / decadeTotal)*10)/10);
+    }
+
 
     const data2 = {
         labels: years,
         datasets: [{
                 label: 'Autrice',
-                data: femalePerYear,
+                data: barResYearF,
                 backgroundColor: '#cca269',
                 stack: 's0'
             },
             {
                 label: 'Auteurs',
-                data: malePerYear,
+                data: barResYearM,
+                backgroundColor: '#f1dfd1',
+                stack: 's0'
+            }
+        ]
+    };
+
+    const data3 = {
+        labels: decades,
+        datasets: [{
+                label: 'Autrice',
+                data: barResDecadeF,
+                backgroundColor: '#cca269',
+                stack: 's0'
+            },
+            {
+                label: 'Auteurs',
+                data: barResDecadeM,
                 backgroundColor: '#f1dfd1',
                 stack: 's0'
             }
@@ -314,6 +377,33 @@ function loadData(desc, data1) {
         type: 'horizontalBar',
         data: data2,
         options: {
+            maintainAspectRatio: false,
+            indexAxis: "y",
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart - Stacked',
+                    
+                },
+            },
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        }
+    });
+
+    var ctx3 = document.getElementById("barChartDecade").getContext('2d');
+    var chart3 = new Chart(ctx3, {
+        type: 'horizontalBar',
+        data: data3,
+        options: {
+            maintainAspectRatio: false,
             indexAxis: "y",
             plugins: {
                 title: {
