@@ -11,11 +11,11 @@ let data1, desc;
 
 loadMetadata();
 
-function loadMetadata(){
 //from Google Sheets
 // Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
 //local
-Papa.parse('../assets/data/desc.csv', {
+function loadMetadata(){
+Papa.parse('assets/data/desc.csv', {
     download: true,
     header: true,
     complete: function (results) {
@@ -27,7 +27,7 @@ Papa.parse('../assets/data/desc.csv', {
 }
 
 function loadDataSet(desc){
-Papa.parse('../assets/data/data1.csv', {
+Papa.parse('assets/data/data1.csv', {
     download: true,
     header: true,
     complete: function (results) {
@@ -258,7 +258,7 @@ function loadData(desc, data1) {
 
     for (let i = 0; i < sorted_data.length; i++) {
         let wordcloud_size = Math.ceil(10 * Math.log(autriceMap[sorted_data[i].name]) + 12);
-        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="../authors/?key=${sorted_data[i].id}">${sorted_data[i].name.replace(/ /ig,"&nbsp;")}</a> `;
+        autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="author.html?key=${sorted_data[i].id}">${sorted_data[i].name.replace(/ /ig,"&nbsp;")}</a> `;
         // .replace(/ /ig,"&nbsp;")
     }
 

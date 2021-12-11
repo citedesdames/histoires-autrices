@@ -14,11 +14,11 @@ docReady(function () {
     if (width > 768) {
         $("#hero__img").animate({
             right: -200,
-            opacity: 0.3
+            opacity: 0.2
         }, 1000);
     } else {
         $("#hero__img").animate({
-            opacity: 0.3
+            opacity: 0.2
         }, 1000);
     }
 
@@ -57,7 +57,11 @@ function showVisiautrices() {
     }
 }
 
-var data1;
+let data1, places;
+
+loadAllData();
+
+function loadAllData(){
 //from Google Sheets
 // Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
 //local
@@ -67,11 +71,12 @@ Papa.parse('assets/data/data1.csv', {
     complete: function (results) {
         data1 = results.data;
         console.log(data1);
-        loadData(places, data1);
+        loadPlaceData(data1);
     }
 });
+}
 
-var places;
+function loadPlaceData(data1){
 Papa.parse('assets/data/places.csv', {
     download: true,
     header: true,
@@ -81,6 +86,7 @@ Papa.parse('assets/data/places.csv', {
         loadData(places, data1);
     }
 });
+}
 
 function loadData(places, data1) {
 
@@ -98,34 +104,18 @@ function loadData(places, data1) {
         return [...new Map(arr.map(item => [item[key], item])).values()]
     }
 
-    let datasetLinks = {
-        'name': [],
-        'id': []
-    };
+    let datasetIds = {};
 
-    //find all datasets
+    //find all ids of datasets in the data
     for (let i = 0; i < data1.length; i++) {
-        datasetLinks['name'].push(data1[i]['Jeu de données']);
-        datasetLinks['id'].push(data1[i]['dataset_id_FK']);
+        datasetIds[data1[i]['Jeu de données']] = data1[i]['dataset_id_FK'];
     }
 
-    //Detect duplicates and null values and push the remainder into a new array
-    let newdatasetLinks = {
-        'name': [],
-        'id': []
-    };
-
-    for (let i = 0; i < datasetLinks['name'].length; i++) {
-        if (newdatasetLinks['name'].indexOf(datasetLinks['name'][i]) === -1 && datasetLinks['name'][i] != null) {
-            newdatasetLinks['name'].push(datasetLinks['name'][i]);
-            newdatasetLinks['id'].push(datasetLinks['id'][i]);
-        }
-    }
-
-    //render dataset links
-    let flexLinks = document.getElementById('flexLinks');
-    for (let i = 0; i < newdatasetLinks['name'].length; i++) {
-        flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset/?id=${newdatasetLinks['id'][i]}">${newdatasetLinks['name'][i]}</a></li>`;
+    console.log(datasetIds);
+    let datasetNames = (Object.keys(datasetIds)).sort();
+    
+    for (let i = 0; i < datasetNames.length; i++) {
+        flexLinks.innerHTML += `<li class="une__flex__item"><a href="dataset.html?id=${datasetIds[datasetNames[i]]}">${datasetNames[i]}</a></li>`;
     }
 
 
@@ -187,7 +177,7 @@ function loadData(places, data1) {
         // Splits links of authors
         let authorsLinks = '';
         for ( let i = 0; i<authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'].length; i++) {
-            authorsLinks += `<a href="authors/?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i].replace(/ /,"&nbsp;")}</a> `;
+            authorsLinks += `<a href="author.html?key=${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['id'][i]}">${authorsPlaces[Object.keys(authorsPlaces)[q]]['authors']['authorname'][i].replace(/ /,"&nbsp;")}</a> `;
         }
         let birthLocat = Object.keys(authorsPlaces)[q].split(" ")
 
@@ -204,7 +194,7 @@ function loadData(places, data1) {
         // Splits links of authors
         let authorsLinks = '';
         for ( let i = 0; i<deathPlaces[Object.keys(deathPlaces)[q]]['authors']['id'].length; i++) {
-            authorsLinks += `<a href="authors/?key=${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['id'][i]}">${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['authorname'][i].replace(/ /,"&nbsp;")}</a> `;
+            authorsLinks += `<a href="author.html?key=${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['id'][i]}">${deathPlaces[Object.keys(deathPlaces)[q]]['authors']['authorname'][i].replace(/ /,"&nbsp;")}</a> `;
         }
         let birthLocat = Object.keys(deathPlaces)[q].split(" ")
 

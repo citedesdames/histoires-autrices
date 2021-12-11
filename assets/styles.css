@@ -49,6 +49,14 @@ body {
   margin: 0;
 }
 
+p {
+  font-size: 1.4em;
+}
+
+h2{
+  font-size: 2em;
+}
+
 .loader {
   width: 100vw;
   height: 100vh;
@@ -114,6 +122,7 @@ body {
 }
 
 .hero {
+  overflow: hidden;
   height: 100vh;
   position: relative;
   padding: 0 10%;
@@ -139,14 +148,24 @@ body {
 }
 
 .hero__text {
-  margin: 0;
-  z-index: 3;
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0px;
+  margin: 2rem 0;
+  /* background: linear-gradient(to right, #8B4513 6px, transparent 6px) 0 100%, linear-gradient(to left, #8B4513 6px, transparent 6px) 100% 0, linear-gradient(to bottom, #8B4513 6px, transparent 6px) 100% 0, linear-gradient(to top, #8B4513 6px, transparent 6px) 0 100%; */
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  color: #333;
+  font-size: 1.4em;
+  font-style: italic;
 }
 
 .hero__img {
   position: absolute;
-  opacity: 0;
+  opacity: 0.2;
   right: -50rem;
+  top: -50vw
   z-index: 1;
   width: 50vw;
 }
@@ -365,36 +384,6 @@ body {
 }
 
 .une__text {
-  display: block;
-  background-image: url("images/book--fr.svg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 1rem 4rem;
-  margin: 2rem 0;
-  background: linear-gradient(to right, #8B4513 6px, transparent 6px) 0 100%, linear-gradient(to left, #8B4513 6px, transparent 6px) 100% 0, linear-gradient(to bottom, #8B4513 6px, transparent 6px) 100% 0, linear-gradient(to top, #8B4513 6px, transparent 6px) 0 100%;
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  color: #666;
-  font-size: 1.25rem;
-  text-align: center;
-}
-
-.une__text:before {
-  content: "«";
-  font-size: 5em;
-  position: absolute;
-  left: -5px;
-  margin-top: -95px;
-  color: #666;
-}
-
-.une__text:after {
-  content: "»";
-  font-size: 5em;
-  position: absolute;
-  right: -5px;
-  margin-top: -30px;
-  color: #666;
 }
 
 .une__flex {
@@ -739,11 +728,17 @@ body {
           box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
+.read__title{
+  margin-top: 0;
+  font-family: 'Merriweather', serif;
+  font-size: 3rem;
+}
+
 .bnf__title,
 .wikidata__title {
   margin-top: 0;
   font-family: 'Merriweather', serif;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 @media only screen and (max-width: 768px) {

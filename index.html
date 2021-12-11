@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="assets/styles.css">
     <script src="assets/papaparse.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="assets/script.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
@@ -30,68 +29,66 @@
                 <span></span>
             </button>
             <ul class="nav__list" id="navList">
-                <li class="nav__list__link"><a href="../">Accueil</a></li>
-                <li class="nav__list__title">Embarquement</li>
-                <li class="nav__list__link"><a href="#une">Destinations</a></li>
-                <li class="nav__list__link"><a href="#apropos">À propos</a></li>
-                <li class="nav__list__title">Exploration</li>
-                <li class="nav__list__link"><a href="#">Aventures</a></li>
-                <li class="nav__list__link"><a href="#">Héroines</a></li>
+                <li class="nav__list__title"><a href="index.html">Histoires d'Autrices</a></li>
+                <li class="nav__list__link"><a href="index.html#jeux-donnees">Où les retrouver ?</a></li>
+                <li class="nav__list__link"><a href="index.html#jeux-donnees">Où ont-elles vécu ?</a></li>
+                <li class="nav__list__link"><a href="index.html#a-propos">Pourquoi ce site ?</a></li>
             </ul>
         </nav>
         <section class="hero">
             <h1 class="hero__title">Histoires d'Autrices</h1>
-            <p class="hero__text">À la découverte des femmes de lettres étudiées, jouées, lues, primées ou publiées en
-                France.</p>
+            <p class="hero__text">À la découverte des femmes de lettres étudiées, jouées, lues, primées ou publiées en France.</p>
             <img src="assets/images/bg-hero.svg" alt="" id="hero__img" class="hero__img">
         </section>
-        <section class="une" id="une">
-            <h2 class="une__title">Nos collections d'autrices</h2>
-            <q class="une__text">Parcourez nos collections de littérature pour voir quelles autrices, incontournables ou méconnues, d'hier ou d'aujourd'hui, y sont représentées.</q>
+        <section class="une" id="jeux-donnees">
+            <h2 class="une__title">Où les retrouver ?</h2>
+            <p class="une__text">Parcourez nos jeux de données pour voir quelles autrices, incontournables ou méconnues, d'hier ou d'aujourd'hui, y sont représentées.</q>
             <ul id="flexLinks" class="une__flex">
             </ul>
         </section>
-        <section class="map">
-            <h2 class="map__title">Carte</h2>
+        <section class="map" id="carte">
+            <h2 class="map__title">Où ont-elles vécu ?</h2>
             <p class="map__text">Sur la carte ci-dessous, découvrez quelles autrices de notre base de données sont nées ou décédées près de chez vous.</p>
             <div id="mapid" class="map__map"></div>
         </section>
-        <section class="preface" id="apropos">
-            <h2 class="preface__title">À propos</h2>
+        <section class="preface" id="a-propos">
+            <h2 class="preface__title">Pourquoi ce site ?</h2>
             <button class="preface__btn" id="siteBtn" onclick="showSite()">
                 <h3>Site</h3>
             </button>
+            <!--
             <button class="preface__btn" id="visiautricesBtn" onclick="showVisiautrices()">
                 <h3>Visiautrices</h3>
             </button>
+            -->
             <div id="site" style="display: block">
-                <p class="preface__text">Découvrir quels écrivaines et écrivains on étudie, joue au théâtre, lit, prime
-                    ou publie en France, fournit
+                <p class="preface__text">Découvrir quels écrivaines on étudie, joue, lit, prime ou publie en France, fournit
                     plusieurs points de vue sur le matrimoine littéraire français ou francophone, des autrices les plus
-                    célèbres aux
-                    oubliées du Panthéon littéraire.
+                    célèbres aux oubliées du Panthéon littéraire.
                 </p>
                 <p class="preface__text">
-                    Développé à l'Université Paris-Est Marne-la-Vallée par Thi Van An Truong et <a
-                        href="http://leonardkim.web-edu.fr">Léonard Kim</a> dans le cadre des projets de
-                    recherche
-                    VisiAutrices (2017-2019) et Cité des dames (2019-2022), ce site web permet d'explorer des données
-                    ouvertes réunies pour la plupart par
-                    l'association
-                    George, le deuxième texte, par Laura Borie et Mallory Thiébaud pendant leur stage pour le projet
-                    VisiAutrices,
-                    mais aussi par d'autres structures (ministère de la Culture, SACD) et partenaires (Centre Hubertine
-                    Auclert).
+                    Développé à l'Université Paris-Est Marne-la-Vallée, devenue en 2020 université Gustave Eiffel,
+                    par <a href="https://fr.linkedin.com/in/thi-van-an-truong">Thi Van An Truong</a> 
+                    et par <a href="http://leonardkim.web-edu.fr">Léonard Kim</a> pendant
+                    leurs stages pour les projets de recherche
+                    <a href="http://visiautrices.hypotheses.org">VisiAutrices</a> (2017-2019) et 
+                    <a href="http://citedesdames.hypotheses.org">Cité des dames</a> (2019-2022).
+                    Il permet d'explorer des données ouvertes réunies pour la plupart par
+                    l'association <a href="http://ledeuxiemetexte.fr"><i>Le deuxième texte</i></a>, 
+                    par Laura Borie et Mallory Thiébaud pendant leur stage pour le projet VisiAutrices,
+                    mais aussi par d'autres structures (ministère de la Culture, SACD, Centre Hubertine Auclert).
                 </p>
+                <!--
                 <p class="preface__text">
                     Suite aux constats statistiques effectués, des recommandations pour améliorer la présence ou la
-                    visibilité des
-                    femmes de lettres sont également formulées par l'association George, le deuxième texte.
+                    visibilité des femmes de lettres sont également formulées par <i>Le deuxième texte</i>.
                 </p>
+                -->
                 <p class="preface__text">
-                    <i>Illustration: Pixabay</i>
+                    <i>Illustration : Pixabay</i>
                 </p>
             </div>
+            <!--
             <div id="visiautrices" style="display: none">
                 <p class="preface__text">
                     Le projet de recherche VisiAutrices vise à mesurer et caractériser la place des femmes dans
@@ -106,8 +103,9 @@
                         d’entrée à l’Ecole normale supérieure, de 2008 à 2017.</a>
                 </p>
             </div>
+            -->
         </section>
     </main>
 </body>
-
+<script src="assets/script.js"></script>
 </html>

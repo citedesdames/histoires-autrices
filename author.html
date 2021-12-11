@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histoires d'Autrices</title>
-    <link rel="stylesheet" href="../assets/styles.css">
-    <script src="../assets/papaparse.min.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/papaparse.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource@0.1.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
-    <script src="../assets/authors.js"></script>
+    <script src="assets/author.js"></script>
 </head>
 
 <body style="overflow:hidden;">
@@ -28,13 +28,10 @@
                 <span></span>
             </button>
             <ul class="nav__list" id="navList">
-                <li class="nav__list__link"><a href="../">Accueil</a></li>
-                <li class="nav__list__title">Embarquement</li>
-                <li class="nav__list__link"><a href="#une">Destinations</a></li>
-                <li class="nav__list__link"><a href="#apropos">À propos</a></li>
-                <li class="nav__list__title">Exploration</li>
-                <li class="nav__list__link"><a href="#">Aventures</a></li>
-                <li class="nav__list__link"><a href="#">Héroines</a></li>
+                <li class="nav__list__title"><a href="index.html">Histoires d'Autrices</a></li>
+                <li class="nav__list__link"><a href="index.html#jeux-donnees">Où les retrouver ?</a></li>
+                <li class="nav__list__link"><a href="index.html#jeux-donnees">Où ont-elles vécu ?</a></li>
+                <li class="nav__list__link"><a href="index.html#a-propos">Pourquoi ce site ?</a></li>
             </ul>
         </nav>
         <section class="authorHero">
@@ -43,14 +40,15 @@
             <p class="authorHero__text"><span id="dob"></span><span id="dod"></span></p>
         </section>
         <section class="dataset">
-            <h2 class="dataset__title"> Les aventures auxquelles elle a pris part...</h2>
+            <h2 class="dataset__title">Où la retrouver ?</h2>
             <p class="dataset__text">Découvrez les jeux de données concernant <span id="author_title"></span>.</p>
             <ul class="dataset__flex" id="datasetLinks"></ul>
         </section>
-        <section class="wikidata">
+        <section class="bnf">
             <span id="wikidataText">
-                <h2 class="wikidata__title">Les œuvres auxquelles elle a donné vie…</h2>
-                <p class="wikidata__text">Plongez aussi dans ses œuvres sur Wikidata.</p>
+                <h2 class="read__title">Où la lire ?</h2>
+                <h3 class="wikidata__title">Sur Wikisource</h3>
+                <p class="bnf__text">Plongez dans ses œuvres mises à disposition sous forme de livres électroniques relus de façon collaborative sur Wikisource.</p>
             </span>
             <div class="wikidata__flex" id="wikidataData">
             </div>
@@ -58,11 +56,9 @@
             <!-- <h2 class="wikidata__title">...et les histoires auxquelles elle a donné vie.</h2>
             <p class="wikidata__text">Plongez aussi dans ses œuvres sur Wikidata.</p>
             <ul class="wikidata__flex"></ul> -->
-        </section>
-        <section class="bnf">
             <span id="bnfText">
-                <h2 class="bnf__title">...et les histoires auxquelles elle a donné vie.</h2>
-                <p class="bnf__text">Plongez aussi dans ses œuvres sur Gallica.</p>
+                <h3 class="bnf__title">Dans Gallica</h3>
+                <p class="bnf__text">Plongez dans ses œuvres mises à disposition par la Bibliothèque nationale de France sur Gallica.</p>
             </span>
             <ul class="bnf__flex" id="worksLinks"></ul>
             <button class="bnf__btn" id="loadmore2">Voir plus... (<span id="itemsLeftBNF"></span>)</button>

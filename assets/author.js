@@ -16,7 +16,7 @@ var data1;
 //from Google Sheets
 // Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
 //local
-Papa.parse('../assets/data/data1.csv', {
+Papa.parse('assets/data/data1.csv', {
     download: true,
     header: true,
     complete: function (results) {
@@ -74,7 +74,7 @@ function loadData(data1) {
 
     //Render dataset links
     for (let i = 0; i < trimmedValues['dataset'].length; i++) {
-        datasetLink = `<li class="dataset__flex__item"><a href="../dataset/?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
+        datasetLink = `<li class="dataset__flex__item"><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
     }
     console.log(gallicaName);
@@ -207,18 +207,18 @@ function loadData(data1) {
 
     //Generate in French name of months from wikidata (used with getMonth() function)
     var month = new Array();
-    month[0] = "Janvier";
-    month[1] = "Février";
-    month[2] = "Mars";
-    month[3] = "Avril";
-    month[4] = "Mai";
-    month[5] = "Juin";
-    month[6] = "Juillet";
-    month[7] = "Août";
-    month[8] = "Septembre";
-    month[9] = "Octobre";
-    month[10] = "Novembre";
-    month[11] = "Decembre";
+    month[0] = "janvier";
+    month[1] = "février";
+    month[2] = "mars";
+    month[3] = "avril";
+    month[4] = "mai";
+    month[5] = "juin";
+    month[6] = "juillet";
+    month[7] = "août";
+    month[8] = "septembre";
+    month[9] = "octobre";
+    month[10] = "novembre";
+    month[11] = "décembre";
 
     //render wikidata image + date of birth/death
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
@@ -232,9 +232,10 @@ function loadData(data1) {
     });
 
     //get wikidata reading materials
-    const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel WHERE {
+    const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel (COUNT(?rel) AS ?propcount) WHERE {
         ?livre  wdt:P50 wd:Q${wikidataID};
           wdt:P31 wd:Q3331189.
+        ?livre ?rel ?blabla .
         OPTIONAL { ?livre wdt:P18 ?image. }
         OPTIONAL { ?livre wdt:P996 ?image2. }
         OPTIONAL { ?livre wdt:P123 ?publisher. }
@@ -244,7 +245,8 @@ function loadData(data1) {
           schema:isPartOf <https://fr.wikisource.org/>.
         SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
       }
-      GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel`;
+      GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel ?propcount
+      ORDER BY DESC(?propcount)`;
 
 
     const queryDispatcher2 = new SPARQLQueryDispatcher(endpointUrl);
