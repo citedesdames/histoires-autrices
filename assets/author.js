@@ -59,7 +59,7 @@ function loadData(data1) {
             if(!(data1[i]['dataset_id_FK'] in dataLinks)){
                dataLinks[data1[i]['dataset_id_FK']] = [];
             }
-            dataLinks[data1[i]['dataset_id_FK']].push({"src":data1[i]['src'],"details":data1[i]['details']});
+            dataLinks[data1[i]['dataset_id_FK']].push({"src":data1[i]['src'],"details":data1[i]['details'],"year":data1[i]['year']});
         }
 
     }
@@ -81,9 +81,13 @@ function loadData(data1) {
     for (let i = 0; i < trimmedValues['dataset'].length; i++) {
         let allLinks = ""
         for (let j = 0; j < dataLinks[trimmedValues['id'][i]].length; j++) {
-           allLinks += `<span class="chart__bubble__column__dot"><a href="${dataLinks[trimmedValues['id'][i]][j]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
+            if(dataLinks[trimmedValues['id'][i]][j]['src'].length > 0){
+                allLinks += `<span class="chart__bubble__column__dot"><a href="${dataLinks[trimmedValues['id'][i]][j]['src']}" target="_blank"></a><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['year']} - ${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
+            } else {
+                allLinks += `<span class="chart__bubble__column__dot"><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['year']} - ${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
+            }
         }
-        datasetLink = `<li class="dataset__flex__item"><div style="position:absolute;z-index:1">${allLinks}</div><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
+        datasetLink = `<li class="dataset__flex__item"><div class="chart__bubble__column__dots">${allLinks}</div><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
     }
     console.log(gallicaName);
@@ -204,13 +208,14 @@ function loadData(data1) {
     //get wikidata image
     const endpointUrl = 'https://query.wikidata.org/sparql';
     const sparqlQuery = `#defaultView:Table
-    SELECT ?item ?itemLabel ?pic ?picLabel ?birthdate ?birthdateLabel ?deathdate ?deathdateLabel ?wikipedia WHERE {
-      wd:Q${wikidataID} wdt:P18 ?pic.
-      ?item wdt:P18 ?pic.
+    SELECT ?item ?itemLabel ?pic ?picLabel ?birthdate ?birthdateLabel ?deathdate ?deathdateLabel ?wikipedia ?siefar ?catalogueBnF WHERE {
+      BIND(wd:Q${wikidataID} AS ?item).
       SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
-      ?item wdt:P31 wd:Q5.
+      OPTIONAL { ?item wdt:P18 ?pic. }
       OPTIONAL { ?item wdt:P569 ?birthdate. }
       OPTIONAL { ?item wdt:P570 ?deathdate. }
+      OPTIONAL { ?item wdt:P7962 ?siefar. }
+      OPTIONAL { ?item wdt:P268 ?catalogueBnF. }
       OPTIONAL {?wikipedia schema:about ?item ; schema:isPartOf <https://fr.wikipedia.org/>}
     }
     LIMIT 1`;
@@ -237,17 +242,42 @@ function loadData(data1) {
         if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['pic'] != undefined){
             document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`;
         }
+        let yob = "?";
         if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['birthdateLabel'] != undefined){
             let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']);
-            document.getElementById("dob").innerHTML = `Née le : ${dob.getDate()} ${month[dob.getMonth()]} ${dob.getFullYear()}<br>`
+            if(!isNaN(dob)){
+                yob = dob.getFullYear();
+            } 
         }
+        let yod = "?";
+        console.log(res['results']['bindings']);
         if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['deathdateLabel'] != undefined){
             let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']);
-            document.getElementById("dod").innerHTML = `Décédée le : ${dod.getDate()} ${month[dod.getMonth()]} ${dod.getFullYear()}`
+            if(!isNaN(dod)){
+                yod = dod.getFullYear();
+            }
+        } else {
+            yod = "";
+        }
+        document.getElementById("dob").innerHTML = "(" + yob + "-" + yod + ")";
+
+        let bio = "";
+        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['siefar'] != undefined){
+            bio += `Dans le <a href="http://siefar.org/dictionnaire/fr/${res['results']['bindings'][0]['siefar']['value']}" style="color:#cca269"><i>Dictionnaire des femmes de l'ancienne France</i> de la SIEFAR</a>`;
         }
         if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['wikipedia'] != undefined){
-            document.querySelector(".authorHero__text").innerHTML += `<br><a href="${res['results']['bindings'][0]['wikipedia']['value']}" style="color:#cca269">Sur Wikipédia</a>`
+            if(bio.length>0){
+                bio += `<br>`;
+            }
+            bio += `Sur <a href="${res['results']['bindings'][0]['wikipedia']['value']}" style="color:#cca269">Wikipédia</a>`;
         }
+        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['catalogueBnF'] != undefined){
+            if(bio.length>0){
+                bio += `<br>`;
+            }
+            bio += `Dans <a href="https://data.bnf.fr/fr/${res['results']['bindings'][0]['catalogueBnF']['value'].substring(0,res['results']['bindings'][0]['catalogueBnF']['value'].length-1)}" style="color:#cca269">les données de la Bibliothèque nationale de France</a>`;
+        }
+        document.querySelector(".authorHero__text").innerHTML += "<br><br>" + bio;
     });
 
     //get wikidata reading materials

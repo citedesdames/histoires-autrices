@@ -68,7 +68,6 @@ function loadData(desc, data1) {
     console.log(data1);
 
     //Counting number of female and male authors per year ================================================================
-
     let nbsPerYear = {};
     for (var i = 0; i < data1.length; i++) {
         if (data1[i]['dataset_id_FK'] == url_id) {
@@ -155,6 +154,7 @@ function loadData(desc, data1) {
             bubbleFobject.src = data1[i]["src"];
             bubbleFobject.name = data1[i]["Nom normalisé"];
             bubbleFobject.details = data1[i]["details"];
+            bubbleFobject.year = data1[i]["year"];
             bubbleF.push(bubbleFobject);
         } else if (data1[i].Genre == "M" && data1[i]['dataset_id_FK'] == url_id) {
             authorCount['m'].push(data1[i]["author_id_FK"] + ";" + data1[i]["year"]);
@@ -163,6 +163,7 @@ function loadData(desc, data1) {
             bubbleMobject.src = data1[i]["src"];
             bubbleMobject.name = data1[i]["Nom normalisé"];
             bubbleMobject.details = data1[i]["details"];
+            bubbleMobject.year = data1[i]["year"];
             bubbleM.push(bubbleMobject);
         }
     }
@@ -177,15 +178,26 @@ function loadData(desc, data1) {
     
     console.log(trimmedBubbleM)
 
+
     //render bubbles (female authors)
     for (let i = 0; i < trimmedBubbleF.length; i++) {
-        document.getElementById("bubbleF").innerHTML += `<span class="chart__bubble__column__dot"><a href="${trimmedBubbleF[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleF[i]['details']}</p><p>${trimmedBubbleF[i]['name']}</p></span></span>`
+        let newBubble = document.createElement("span");
+        newBubble.classList.add("chart__bubble__column__dot");
+        newBubble.innerHTML = `<a href="${trimmedBubbleF[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleF[i]['year']} - ${trimmedBubbleF[i]['details']}</p><p>${trimmedBubbleF[i]['name']}</p></span>`;
+        document.getElementById("bubbleF").appendChild(newBubble);
     }
+
+    console.log("Render bubbles2")
 
     //render bubbles (male authors)
     for (let i = 0; i < trimmedBubbleM.length; i++) {
-        document.getElementById("bubbleM").innerHTML += `<span class="chart__bubble__column__dot"><a href="${trimmedBubbleM[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleM[i]['details']}</p><p>${trimmedBubbleM[i]['name']}</p></span></span>`
+        let newBubble = document.createElement("span");
+        newBubble.classList.add("chart__bubble__column__dot");
+        newBubble.innerHTML = `<a href="${trimmedBubbleM[i]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${trimmedBubbleM[i]['year']} - ${trimmedBubbleM[i]['details']}</p><p>${trimmedBubbleM[i]['name']}</p></span>`;
+        document.getElementById("bubbleM").appendChild(newBubble);
     }
+
+    console.log("Duplicates")
 
     //authorCount : Detect duplicates and trim them into a new array
     let trimmedCount = {
@@ -211,6 +223,7 @@ function loadData(desc, data1) {
     };
     let autriceMap = {};
 
+    
     //Find and show links to female authors
     for (let i = 0; i < autrice_noms['name'].length; i++) {
 
@@ -224,7 +237,6 @@ function loadData(desc, data1) {
     autriceLinks['name'].forEach(function (x) {
         autriceMap[x] = (autriceMap[x] || 0) + 1;
     });
-
 
     //sort by alphabetical order
 
