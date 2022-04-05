@@ -36,6 +36,7 @@ function loadData(data1) {
         'dataset': [],
         'id': []
     };
+    let dataLinks = {};
     for (var i = 0; i < data1.length; i++) {
         if (data1[i]['author_id_FK'] == url_key) {
             //Get name of data and return as HTML element for the main h1 title
@@ -55,6 +56,10 @@ function loadData(data1) {
             //Get datasets where the author appears
             datasetLinks['dataset'].push(data1[i]['Jeu de données']);
             datasetLinks['id'].push(data1[i]['dataset_id_FK']);
+            if(!(data1[i]['dataset_id_FK'] in dataLinks)){
+               dataLinks[data1[i]['dataset_id_FK']] = [];
+            }
+            dataLinks[data1[i]['dataset_id_FK']].push({"src":data1[i]['src'],"details":data1[i]['details']});
         }
 
     }
@@ -74,7 +79,11 @@ function loadData(data1) {
 
     //Render dataset links
     for (let i = 0; i < trimmedValues['dataset'].length; i++) {
-        datasetLink = `<li class="dataset__flex__item"><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
+        let allLinks = ""
+        for (let j = 0; j < dataLinks[trimmedValues['id'][i]].length; j++) {
+           allLinks += `<span class="chart__bubble__column__dot"><a href="${dataLinks[trimmedValues['id'][i]][j]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
+        }
+        datasetLink = `<li class="dataset__flex__item"><div style="position:absolute">${allLinks}</div><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
     }
     console.log(gallicaName);
@@ -195,13 +204,14 @@ function loadData(data1) {
     //get wikidata image
     const endpointUrl = 'https://query.wikidata.org/sparql';
     const sparqlQuery = `#defaultView:Table
-    SELECT ?item ?itemLabel ?pic ?picLabel ?birthdate ?birthdateLabel ?deathdate ?deathdateLabel WHERE {
+    SELECT ?item ?itemLabel ?pic ?picLabel ?birthdate ?birthdateLabel ?deathdate ?deathdateLabel ?wikipedia WHERE {
       wd:Q${wikidataID} wdt:P18 ?pic.
       ?item wdt:P18 ?pic.
       SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
       ?item wdt:P31 wd:Q5.
       OPTIONAL { ?item wdt:P569 ?birthdate. }
       OPTIONAL { ?item wdt:P570 ?deathdate. }
+      OPTIONAL {?wikipedia schema:about ?item ; schema:isPartOf <https://fr.wikipedia.org/>}
     }
     LIMIT 1`;
 
@@ -224,11 +234,20 @@ function loadData(data1) {
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(res => {
         console.log(res);
-        document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`
-        let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']);
-        let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']);
-        document.getElementById("dob").innerHTML = `Née le : ${dob.getDate()} ${month[dob.getMonth()]} ${dob.getFullYear()}<br>`
-        document.getElementById("dod").innerHTML = `Décédée le : ${dod.getDate()} ${month[dod.getMonth()]} ${dod.getFullYear()}`
+        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['pic'] != undefined){
+            document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`;
+        }
+        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['birthdateLabel'] != undefined){
+            let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']);
+            document.getElementById("dob").innerHTML = `Née le : ${dob.getDate()} ${month[dob.getMonth()]} ${dob.getFullYear()}<br>`
+        }
+        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['deathdateLabel'] != undefined){
+            let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']);
+            document.getElementById("dod").innerHTML = `Décédée le : ${dod.getDate()} ${month[dod.getMonth()]} ${dod.getFullYear()}`
+        }
+        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['wikipedia'] != undefined){
+            document.querySelector(".authorHero__text").innerHTML += `<br><a href="${res['results']['bindings'][0]['wikipedia']['value']}" style="color:#cca269">Sur Wikipédia</a>`
+        }
     });
 
     //get wikidata reading materials
@@ -257,8 +276,7 @@ function loadData(data1) {
 
         //if wikidata array is empty, hide
         if (res['results']['bindings'].length == 0) {
-            console.log('yes');
-            document.getElementsByClassName("wikidata")[0].style.display = 'none';
+            //document.getElementsByClassName("authorHero")[0].style.display = 'none';
         } else {
             // show wikidata h2 p button
             document.getElementById("wikidataText").style.display = 'block';
