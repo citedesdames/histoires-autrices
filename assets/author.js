@@ -83,7 +83,7 @@ function loadData(data1) {
         for (let j = 0; j < dataLinks[trimmedValues['id'][i]].length; j++) {
            allLinks += `<span class="chart__bubble__column__dot"><a href="${dataLinks[trimmedValues['id'][i]][j]['src']}"></a><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
         }
-        datasetLink = `<li class="dataset__flex__item"><div style="position:absolute">${allLinks}</div><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
+        datasetLink = `<li class="dataset__flex__item"><div style="position:absolute;z-index:1">${allLinks}</div><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
     }
     console.log(gallicaName);
