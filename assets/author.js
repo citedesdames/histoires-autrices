@@ -52,6 +52,7 @@ function loadData(data1) {
 
             //Get id_wikidata from csv
             wikidataID = data1[i]['id_wikidata'];
+            console.log(wikidataID)
 
             //Get datasets where the author appears
             datasetLinks['dataset'].push(data1[i]['Jeu de données']);
@@ -229,7 +230,7 @@ function loadData(data1) {
     month[4] = "mai";
     month[5] = "juin";
     month[6] = "juillet";
-    month[7] = "août";
+    month[7] = "aoÃ»t";
     month[8] = "septembre";
     month[9] = "octobre";
     month[10] = "novembre";
