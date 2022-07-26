@@ -28,6 +28,8 @@ Femina,30,,1904,2017,,,,3,"INSERT INTO `panorama_dataset` (dataset_id, name, sta
 Goncourt des lycéens,31,,1988,2017,,,,3,"INSERT INTO `panorama_dataset` (dataset_id, name, stats_type_id_FK, description, date_begin, date_end) VALUES (31, 'Goncourt des lycéens', 3, '', 1988, 2017);"
 Roman Fnac,32,,2002,2017,,,,3,"INSERT INTO `panorama_dataset` (dataset_id, name, stats_type_id_FK, description, date_begin, date_end) VALUES (32, 'Roman Fnac', 3, '', 2002, 2017);"
 Théâtre d'autrices dans le domaine public,50,Ce jeu de données recense des pièces de théâtre en français écrites par des femmes dans le domaine public,1547,1927,,,,11,"INSERT INTO `panorama_dataset` (dataset_id, name, stats_type_id_FK, description, date_begin, date_end) VALUES (50, 'Théâtre d’autrices dans le domaine public', 11, 'Ce jeu de données recense des pièces de théâtre en français écrites par des femmes dans le domaine public', 1547, 1927);"
-Molière de l'auteur,51,Ce jeu de données recense les autrices et auteurs nommés ou primés au Molière de l'auteur,1987,2022,,,,14,
-Contenu pédagogique sur theatre-contemporain.net,52,Ce jeu de données recense les autrices et auteurs pour lesquels il existe du contenu pédagogique sur le site theatre-contemporain.net,2014,2022,,,,14,
-Collection Folio Théâtre,53,Ce jeu de données recense les autrices et auteurs de pièces publiées dans la collection Folio Théâtre,1993,2022,,,,14,
+Molière de l'auteur,51,Ce jeu de données recense les autrices et auteurs nommés au Molière de l'auteur de 1987 à 2022,1987,2022,,,,14,,
+Contenu pédagogique sur theatre-contemporain.net,52,"Ce jeu de données recense les autrices et auteurs pour lesquels il existait du contenu pédagogique sur le site theatre-contemporain.net en 2014, 2018 et 2022",2014,2022,,,,14,,
+Collection Folio Théâtre,53,Ce jeu de données recense les autrices et auteurs de pièces publiées dans la collection Folio Théâtre de 1993 à 2022,1993,2022,,,,14,,
+Collection GF,54,"Ce jeu de données recense les auteurs et autrices d'ouvrages publiés dans la collection GF de Flammarion de 1900 à 2022, selon le site de GF en juillet 2022",1900,2022,,,,2,,
+Collection Classiques du Livre de Poche,55,"Ce jeu de données recense les auteurs et autrices d'ouvrages publiés dans la collection Classiques du Livre de Poche de 1967 à 2022, selon le site du Livre de Poche en juillet 2022",1967,2022,,,,,2,
