@@ -293,7 +293,7 @@ function loadData(desc, data1) {
 
     let barchartHeightDecade = document.getElementById("barChartDecade").style.height = (10 + 2 * decades.length) + 'vh';
 
-    if (decades.length <= 5) {
+    if (decades.length <= 1) {
         document.getElementById('barChartDecade').style.display = "none";
         document.getElementById('decadeText').style.display = "none";
     }
