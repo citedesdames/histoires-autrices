@@ -1,4 +1,5 @@
 // $.get('../assets/data/data1.csv', function (csvString) {
+let gallicaID = "";
 let gallicaName = "";
 let wikidataID = null;
 
@@ -47,7 +48,8 @@ function loadData(data1) {
             //change HTML DOM page title dynamically
             document.title = h1_text + " - Histoires d'Autrices";
 
-            //Get name of data to use later as Gallica identifier
+            //Get BnF id of data to use later as Gallica identifier
+            gallicaID = data1[i]["id_bnf"];
             gallicaName = data1[i]['Nom normalisé'];
 
             //Get id_wikidata from csv
@@ -57,10 +59,14 @@ function loadData(data1) {
             //Get datasets where the author appears
             datasetLinks['dataset'].push(data1[i]['Jeu de données']);
             datasetLinks['id'].push(data1[i]['dataset_id_FK']);
-            if(!(data1[i]['dataset_id_FK'] in dataLinks)){
-               dataLinks[data1[i]['dataset_id_FK']] = [];
+            if (!(data1[i]['dataset_id_FK'] in dataLinks)) {
+                dataLinks[data1[i]['dataset_id_FK']] = [];
             }
-            dataLinks[data1[i]['dataset_id_FK']].push({"src":data1[i]['src'],"details":data1[i]['details'],"year":data1[i]['year']});
+            dataLinks[data1[i]['dataset_id_FK']].push({
+                "src": data1[i]['src'],
+                "details": data1[i]['details'],
+                "year": data1[i]['year']
+            });
         }
 
     }
@@ -82,7 +88,7 @@ function loadData(data1) {
     for (let i = 0; i < trimmedValues['dataset'].length; i++) {
         let allLinks = ""
         for (let j = 0; j < dataLinks[trimmedValues['id'][i]].length; j++) {
-            if(dataLinks[trimmedValues['id'][i]][j]['src'].length > 0){
+            if (dataLinks[trimmedValues['id'][i]][j]['src'].length > 0) {
                 allLinks += `<span class="chart__bubble__column__dot"><a href="${dataLinks[trimmedValues['id'][i]][j]['src']}" target="_blank"></a><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['year']} - ${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
             } else {
                 allLinks += `<span class="chart__bubble__column__dot"><span class="chart__bubble__column__dot__tooltip"><p>${dataLinks[trimmedValues['id'][i]][j]['year']} - ${dataLinks[trimmedValues['id'][i]][j]['details']}</p></span></span>`;
@@ -91,12 +97,13 @@ function loadData(data1) {
         datasetLink = `<li class="dataset__flex__item"><div class="chart__bubble__column__dots">${allLinks}</div><a href="dataset.html?id=${trimmedValues['id'][i]}">${trimmedValues['dataset'][i]}</a></li>`;
         document.getElementById("datasetLinks").innerHTML += datasetLink;
     }
-    console.log(gallicaName);
+    console.log("gallicaID");
+    console.log(gallicaID);
 
 
     // Gallica BNF data ==================================================================================================
-
-    let urlGallica = `https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.org/dc/terms/%3E%20%0APREFIX%20foaf:%20%3Chttp://xmlns.com/foaf/0.1/%3E%20%0APREFIX%20rdarelationships:%20%3Chttp://rdvocab.info/RDARelationshipsWEMI/%3E%20%0ASELECT%20?auteur%20?expression%20?manifestation%20?titreManifestation%20?dateManifestation%20?fichierGallica%20?imgGallica%0AWHERE%20%7B%0A?auteur%20foaf:name%20%22${gallicaName}%22.%0A?expression%20dcterms:contributor%20?auteur.%20%0A?manifestation%20dcterms:date%20?dateManifestation.%20%0A?manifestation%20dcterms:title%20?titreManifestation.%20%0A?manifestation%20rdarelationships:expressionManifested%20?expression.%20%0A?manifestation%20rdarelationships:electronicReproduction%20?fichierGallica.%20%0A%7D%20%0AORDER%20BY%20ASC(?dateManifestation)%0A&format=application/json`;
+    console.log(gallicaName)
+    let urlGallica = `https://data.bnf.fr/sparql?query=PREFIX%20dcterms:%20%3Chttp://purl.org/dc/terms/%3E%20%0APREFIX%20foaf:%20%3Chttp://xmlns.com/foaf/0.1/%3E%20%0APREFIX%20rdarelationships:%20%3Chttp://rdvocab.info/RDARelationshipsWEMI/%3E%20%0ASELECT%20?expression%20?manifestation%20?titreManifestation%20?dateManifestation%20?fichierGallica%20?imgGallica%0AWHERE%20%7B%0A?expression%20dcterms:contributor%20<http://data.bnf.fr/ark:/12148/cb${gallicaID}%23about>.%20%0A?manifestation%20dcterms:date%20?dateManifestation.%20%0A?manifestation%20dcterms:title%20?titreManifestation.%20%0A?manifestation%20rdarelationships:expressionManifested%20?expression.%20%0A?manifestation%20rdarelationships:electronicReproduction%20?fichierGallica.%20%0A%7D%20%0AORDER%20BY%20ASC(?dateManifestation)%0A&format=application/json`;
     $.getJSON(urlGallica, function (dataGallica) {
         const loadmore2 = document.querySelector('#loadmore2');
 
@@ -151,7 +158,11 @@ function loadData(data1) {
         let currentItems = 9;
         loadmore2.addEventListener('click', (e) => {
             const elementList = [...document.querySelectorAll('.bnf__flex__item')];
-            document.getElementById('itemsLeftBNF').innerHTML = `${elementList.length} restants`;
+            if (elementList.length > 1) {
+                document.getElementById('itemsLeftBNF').innerHTML = `${elementList.length} restants`;
+            } else {
+                document.getElementById('itemsLeftBNF').innerHTML = `${elementList.length} restant`;
+            }
             for (let i = currentItems; i < currentItems + 9; i++) {
                 if (elementList[i]) {
                     elementList[i].style.display = 'block';
@@ -159,8 +170,11 @@ function loadData(data1) {
             }
             currentItems += 9;
             let itemsLeft = elementList.length - currentItems;
-            document.getElementById('itemsLeftBNF').innerHTML = `${itemsLeft} restants`;
-
+            if (itemsLeft > 1) {
+                document.getElementById('itemsLeftBNF').innerHTML = `${itemsLeft} restants`;
+            } else {
+                document.getElementById('itemsLeftBNF').innerHTML = `${itemsLeft} restant`;
+            }
 
             // Load more button will be hidden after list fully loaded
             if (currentItems >= elementList.length) {
@@ -182,7 +196,11 @@ function loadData(data1) {
         if (bnfNmb <= 0) {
             loadmore2.style.display = 'none';
         }
-        document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
+        if (bnfNmb > 1) {
+            document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restants`;
+        } else {
+            document.getElementById('itemsLeftBNF').innerHTML = `${bnfNmb} restant`;
+        }
     });
 
 
@@ -240,21 +258,21 @@ function loadData(data1) {
     const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
     queryDispatcher.query(sparqlQuery).then(res => {
         console.log(res);
-        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['pic'] != undefined){
+        if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['pic'] != undefined) {
             document.getElementById("authorHero__img").innerHTML = `<img class="authorHero__portait" id="authorImg" alt="" src="${res['results']['bindings'][0]['pic']['value']}">`;
         }
         let yob = "?";
-        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['birthdateLabel'] != undefined){
+        if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['birthdateLabel'] != undefined) {
             let dob = new Date(res['results']['bindings'][0]['birthdateLabel']['value']);
-            if(!isNaN(dob)){
+            if (!isNaN(dob)) {
                 yob = dob.getFullYear();
-            } 
+            }
         }
         let yod = "?";
         console.log(res['results']['bindings']);
-        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['deathdateLabel'] != undefined){
+        if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['deathdateLabel'] != undefined) {
             let dod = new Date(res['results']['bindings'][0]['deathdateLabel']['value']);
-            if(!isNaN(dod)){
+            if (!isNaN(dod)) {
                 yod = dod.getFullYear();
             }
         } else {
@@ -263,17 +281,17 @@ function loadData(data1) {
         document.getElementById("dob").innerHTML = "(" + yob + "-" + yod + ")";
 
         let bio = "";
-        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['siefar'] != undefined){
+        if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['siefar'] != undefined) {
             bio += `Dans le <a href="http://siefar.org/dictionnaire/fr/${res['results']['bindings'][0]['siefar']['value']}" style="color:#cca269"><i>Dictionnaire des femmes de l'ancienne France</i> de la SIEFAR</a>`;
         }
-        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['wikipedia'] != undefined){
-            if(bio.length>0){
+        if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['wikipedia'] != undefined) {
+            if (bio.length > 0) {
                 bio += `<br>`;
             }
             bio += `Sur <a href="${res['results']['bindings'][0]['wikipedia']['value']}" style="color:#cca269">Wikipédia</a>`;
         }
-        if(res['results']['bindings'].length>0 && res['results']['bindings'][0]['catalogueBnF'] != undefined){
-            if(bio.length>0){
+        if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['catalogueBnF'] != undefined) {
+            if (bio.length > 0) {
                 bio += `<br>`;
             }
             bio += `Dans <a href="https://data.bnf.fr/fr/${res['results']['bindings'][0]['catalogueBnF']['value'].substring(0,res['results']['bindings'][0]['catalogueBnF']['value'].length-1)}" style="color:#cca269">les données de la Bibliothèque nationale de France</a>`;
@@ -282,9 +300,10 @@ function loadData(data1) {
     });
 
     //get wikidata reading materials
+    /*
     const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel (COUNT(?rel) AS ?propcount) WHERE {
-        ?livre  wdt:P50 wd:Q${wikidataID};
-          wdt:P31 wd:Q3331189.
+        ?livre wdt:P50 wd:Q${wikidataID}.
+        {?livre wdt:P31 wd:Q39811647} UNION {?livre wdt:P31 wd:Q3331189}.
         ?livre ?rel ?blabla .
         OPTIONAL { ?livre wdt:P18 ?image. }
         OPTIONAL { ?livre wdt:P996 ?image2. }
@@ -297,6 +316,18 @@ function loadData(data1) {
       }
       GROUP BY ?livre ?livreLabel ?pageLivre ?image ?image2 ?publisherLabel ?date ?placeLabel ?placeEdLabel ?propcount
       ORDER BY DESC(?propcount)`;
+    */
+    const sparqlQuery2 = `SELECT ?livre ?livreLabel ?pageLivre ?date (COUNT(?rel) AS ?propcount) WHERE {
+        ?livre wdt:P50 wd:Q${wikidataID}.
+        {?livre wdt:P31 wd:Q39811647} UNION {?livre wdt:P31 wd:Q3331189}.
+        ?livre ?rel ?blabla .
+        OPTIONAL { ?livre wdt:P577 ?date. }
+        ?pageLivre schema:about ?livre;
+          schema:isPartOf <https://fr.wikisource.org/>.
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "fr". }
+      }
+      GROUP BY ?livre ?livreLabel ?pageLivre ?date ?propcount
+      ORDER BY DESC(?date) DESC(?propcount)`;
 
 
     const queryDispatcher2 = new SPARQLQueryDispatcher(endpointUrl);
@@ -319,7 +350,7 @@ function loadData(data1) {
             // if (res['results']['bindings'][i]['livreLabel']) {
             //     elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}${res['results']['bindings'][i]['publisherLabel']['value'].replace(/ /,"&nbsp;")}<a></li> `;
             // } else {
-                elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}</a></li> `;
+            elem.innerHTML += `<li class="wikidata__flex__item" ><a href="${res['results']['bindings'][i]['pageLivre']['value']}">${res['results']['bindings'][i]['livreLabel']['value'].replace(/ /,"&nbsp;")}${res['results']['bindings'][i]['date']!=undefined ? "<br/><small>("+res['results']['bindings'][i]['date']['value'].substring(0,res['results']['bindings'][i]['date']['value'].indexOf("-"))+")</small>" : ""}</a></li> `;
             // }
         }
 
@@ -330,7 +361,6 @@ function loadData(data1) {
 
         loadmore.addEventListener('click', (e) => {
             const elementList = [...document.querySelectorAll('.wikidata__flex__item')];
-            console.log(elementList);
             for (let i = currentItems; i < currentItems + 9; i++) {
                 if (elementList[i]) {
                     elementList[i].style.display = 'block';
@@ -338,7 +368,17 @@ function loadData(data1) {
             }
             currentItems += 9;
             let itemsLeft = elementList.length - currentItems;
-            document.getElementById('itemsLeftWikidata').innerHTML = `${itemsLeft} restants`;
+            if (itemsLeft > 0) {
+                if (itemsLeft > 1) {
+                    document.getElementById('itemsLeftWikidata').innerHTML = `${itemsLeft} restants`;
+                } else {
+                    document.getElementById('itemsLeftWikidata').innerHTML = `${itemsLeft} restant`;
+                }
+            } else {
+                loadmore.style.display = 'none';
+            }
+
+            /*
 
             // "Load more" button will be hidden after list fully loaded
             if (currentItems >= elementList.length) {
@@ -349,7 +389,10 @@ function loadData(data1) {
             if (wikidataNmb <= 0) {
                 loadmore.style.display = 'none';
             }
+            */
         })
+
+
 
         // Count the number of wikidata items
         let wikidataNmb = document.getElementsByClassName("wikidata__flex__item").length - currentItems;
@@ -358,7 +401,11 @@ function loadData(data1) {
         if (wikidataNmb <= 0) {
             loadmore.style.display = 'none';
         }
-        document.getElementById('itemsLeftWikidata').innerHTML = `${wikidataNmb} restants`;
+        if (wikidataNmb > 1) {
+            document.getElementById('itemsLeftWikidata').innerHTML = `${wikidataNmb} restants`;
+        } else {
+            document.getElementById('itemsLeftWikidata').innerHTML = `${wikidataNmb} restant`;
+        }
 
     });
 

@@ -737,7 +737,7 @@ h2{
 
 .bnf__title,
 .wikidata__title {
-  margin-top: 0;
+  margin-top: 2em;
   font-family: 'Merriweather', serif;
   font-size: 2rem;
 }
