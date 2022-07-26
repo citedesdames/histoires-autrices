@@ -11,31 +11,32 @@ let data1, desc;
 
 loadMetadata();
 
+
 //from Google Sheets
 // Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRBsW23Q4I427Tl_y7gcFIncVKMh5Xgk-QyTwXi8S7HO01atE23pXicffryr1dXSxkrQaxeTZsvyL2K/pub?gid=555683372&single=true&output=csv', {
 //local
-function loadMetadata(){
-Papa.parse('assets/data/desc.csv', {
-    download: true,
-    header: true,
-    complete: function (results) {
-        desc = results.data;
-        // console.log(desc);
-        loadDataSet(desc);
-    }
-});
+function loadMetadata() {
+    Papa.parse('assets/data/desc.csv', {
+        download: true,
+        header: true,
+        complete: function (results) {
+            desc = results.data;
+            // console.log(desc);
+            loadDataSet(desc);
+        }
+    });
 }
 
-function loadDataSet(desc){
-Papa.parse('assets/data/data1.csv', {
-    download: true,
-    header: true,
-    complete: function (results) {
-        data1 = results.data;
-        // console.log(data1);
-        loadData(desc, data1);
-    }
-});
+function loadDataSet(desc) {
+    Papa.parse('assets/data/data1.csv', {
+        download: true,
+        header: true,
+        complete: function (results) {
+            data1 = results.data;
+            // console.log(data1);
+            loadData(desc, data1);
+        }
+    });
 }
 
 function loadData(desc, data1) {
@@ -111,26 +112,26 @@ function loadData(desc, data1) {
     let malePerDecade = [];
 
     function decadeMaker(year) {
-        let firstYear = year-(year%10);
-        let lastYear = firstYear+9;
+        let firstYear = year - (year % 10);
+        let lastYear = firstYear + 9;
 
         return `${firstYear} - ${lastYear}`;
     }
 
-    for (let i = 0; i < years.length ; i++) {
+    for (let i = 0; i < years.length; i++) {
         let decade = decadeMaker(years[i]);
-        if (decades[decades.length-1] !== decade) {
+        if (decades[decades.length - 1] !== decade) {
             // creates new decade 
             decades.push(decade);
             femalePerDecade.push(femalePerYear[i]);
             malePerDecade.push(malePerYear[i]);
         } else {
-            femalePerDecade[femalePerDecade.length-1] += femalePerYear[i];
-            malePerDecade[malePerDecade.length-1] += malePerYear[i];
+            femalePerDecade[femalePerDecade.length - 1] += femalePerYear[i];
+            malePerDecade[malePerDecade.length - 1] += malePerYear[i];
         }
 
     }
-    
+
     console.log(femalePerDecade);
 
     //=================================================================
@@ -175,7 +176,7 @@ function loadData(desc, data1) {
     */
     let trimmedBubbleF = bubbleF;
     let trimmedBubbleM = bubbleM;
-    
+
     console.log(trimmedBubbleM)
 
 
@@ -223,7 +224,7 @@ function loadData(desc, data1) {
     };
     let autriceMap = {};
 
-    
+
     //Find and show links to female authors
     for (let i = 0; i < autrice_noms['name'].length; i++) {
 
@@ -300,6 +301,10 @@ function loadData(desc, data1) {
 
     //Generate a pie chart with chart.js 
     var ctx = document.getElementById("pieChart").getContext('2d');
+    Chart.register(ChartjsPluginStacked100.default);
+    Chart.register(ChartDataLabels);
+
+
     var chart = new Chart(ctx, {
         type: 'pie',
         data: data,
@@ -308,10 +313,14 @@ function loadData(desc, data1) {
             plugins: {
                 legend: {
                     position: 'top',
+                    labels: {
+                        font: {
+                            size: '20pt'
+                        }
+                    }
                 },
                 title: {
-                    display: true,
-                    text: 'Chart.js Pie Chart'
+                    display: false
                 },
                 datasource: {
                     url: '/assets/data/data1.csv'
@@ -343,19 +352,23 @@ function loadData(desc, data1) {
     let barResYearF = [];
     let barResYearM = [];
 
-    for (let i = 0; i < years.length ; i++) {
+    for (let i = 0; i < years.length; i++) {
         let yearTotal = femalePerYear[i] + malePerYear[i];
-        barResYearF.push((Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
-        barResYearM.push(100-(Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
+        //barResYearF.push((Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
+        //barResYearM.push(100-(Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
+        barResYearF.push(femalePerYear[i]);
+        barResYearM.push(malePerYear[i]);
     }
 
     let barResDecadeF = [];
     let barResDecadeM = [];
 
-    for (let i = 0; i < decades.length ; i++) {
+    for (let i = 0; i < decades.length; i++) {
         let decadeTotal = femalePerDecade[i] + malePerDecade[i];
-        barResDecadeF.push((Math.round((femalePerDecade[i] * 100) / decadeTotal)*10)/10);
-        barResDecadeM.push(100-(Math.round((femalePerDecade[i] * 100) / decadeTotal)*10)/10);
+        //barResDecadeF.push((Math.round((femalePerDecade[i] * 100) / decadeTotal)*10)/10);
+        //barResDecadeM.push(100-(Math.round((femalePerDecade[i] * 100) / decadeTotal)*10)/10);
+        barResDecadeF.push(femalePerDecade[i]);
+        barResDecadeM.push(malePerDecade[i]);
     }
 
 
@@ -395,17 +408,25 @@ function loadData(desc, data1) {
 
     var ctx2 = document.getElementById("barChart").getContext('2d');
     var chart2 = new Chart(ctx2, {
-        type: 'horizontalBar',
+        type: 'bar',
         data: data2,
         options: {
             maintainAspectRatio: false,
             indexAxis: "y",
             plugins: {
-                title: {
-                    display: true,
-                    text: 'Chart.js Bar Chart - Stacked',
-                    
+                stacked100: {
+                    enable: true
                 },
+                legend: {
+                    labels: {
+                        font: {
+                            size: '16pt'
+                        }
+                    }
+                },
+                title: {
+                    display: false
+                }
             },
             responsive: true,
             scales: {
@@ -421,15 +442,24 @@ function loadData(desc, data1) {
 
     var ctx3 = document.getElementById("barChartDecade").getContext('2d');
     var chart3 = new Chart(ctx3, {
-        type: 'horizontalBar',
+        type: 'bar',
         data: data3,
         options: {
             maintainAspectRatio: false,
             indexAxis: "y",
             plugins: {
+                stacked100: {
+                    enable: true
+                },
+                legend: {
+                    labels: {
+                        font: {
+                            size: '16pt'
+                        }
+                    }
+                },
                 title: {
-                    display: true,
-                    text: 'Chart.js Bar Chart - Stacked'
+                    display: false
                 },
             },
             responsive: true,
