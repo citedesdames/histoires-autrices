@@ -274,18 +274,19 @@ function loadData(desc, data1) {
         autrice_nom_anchor.innerHTML += `<a class="data__chart__text__link" style="color: rgb(${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)},${colorSize(4.5*wordcloud_size)}) !important;font-size: ${wordcloud_size}px" href="author.html?key=${sorted_data[i].id}">${sorted_data[i].name.replace(/ /ig,"&nbsp;")}</a> `;
         // .replace(/ /ig,"&nbsp;")
     }
+   
 
     //data for pie chart 
     data = {
         datasets: [{
-            data: [trimmedCount['m'].length, trimmedCount['f'].length],
+            data: [authorCount['m'].length, authorCount['f'].length,],//[trimmedCount['m'].length, trimmedCount['f'].length],
             backgroundColor: ["#f1dfd1", "#cca269"]
         }],
 
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-            'Auteur',
-            'Autrice'
+            'Auteurs',
+            'Autrices'
         ],
 
     };
