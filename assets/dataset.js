@@ -21,7 +21,7 @@ function loadMetadata() {
         header: true,
         complete: function (results) {
             desc = results.data;
-            // console.log(desc);
+            //console.log(desc);
             loadDataSet(desc);
         }
     });
@@ -66,7 +66,7 @@ function loadData(desc, data1) {
             h1_text = desc[i]["name"];
         }
     }
-    console.log(data1);
+    //console.log(data1);
 
     //Counting number of female and male authors per year ================================================================
     let nbsPerYear = {};
@@ -84,7 +84,7 @@ function loadData(desc, data1) {
             }
         }
     }
-    console.log(nbsPerYear)
+    //console.log(nbsPerYear)
 
     //=================================================================
 
@@ -103,7 +103,7 @@ function loadData(desc, data1) {
         malePerYear.push(nbsPerYear[year][1])
     }
 
-    console.log(femalePerYear);
+    //console.log(femalePerYear);
 
     //=================================================================
     // create array of decades 
@@ -132,7 +132,7 @@ function loadData(desc, data1) {
 
     }
 
-    console.log(femalePerDecade);
+    //console.log(femalePerDecade);
 
     //=================================================================
 
@@ -177,7 +177,7 @@ function loadData(desc, data1) {
     let trimmedBubbleF = bubbleF;
     let trimmedBubbleM = bubbleM;
 
-    console.log(trimmedBubbleM)
+    //console.log(trimmedBubbleM)
 
 
     //render bubbles (female authors)
@@ -188,7 +188,7 @@ function loadData(desc, data1) {
         document.getElementById("bubbleF").appendChild(newBubble);
     }
 
-    console.log("Render bubbles2")
+    //console.log("Render bubbles2")
 
     //render bubbles (male authors)
     for (let i = 0; i < trimmedBubbleM.length; i++) {
@@ -198,7 +198,7 @@ function loadData(desc, data1) {
         document.getElementById("bubbleM").appendChild(newBubble);
     }
 
-    console.log("Duplicates")
+    //console.log("Duplicates")
 
     //authorCount : Detect duplicates and trim them into a new array
     let trimmedCount = {
@@ -233,7 +233,7 @@ function loadData(desc, data1) {
 
     }
 
-    console.log(autrice_noms)
+    //console.log(autrice_noms)
     //Count female authors appearing to use for word cloud
     autriceLinks['name'].forEach(function (x) {
         autriceMap[x] = (autriceMap[x] || 0) + 1;
@@ -552,7 +552,7 @@ $(window).on("load", function () {
     $(".loader").fadeOut("slow");
     $("body").css("overflow", "visible");
     $("#menuButton").click(function () {
-        console.log("Clicked on menu button");
+        //console.log("Clicked on menu button");
         $("#navList").toggle();
         // transform", "translate3d(-100px,0, 0)"
     });
