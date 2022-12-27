@@ -352,6 +352,7 @@ function loadData(desc, data1) {
     // percentages for females authors
     let barResYearF = [];
     let barResYearM = [];
+    let somme = 0;
 
     for (let i = 0; i < years.length; i++) {
         let yearTotal = femalePerYear[i] + malePerYear[i];
@@ -359,6 +360,10 @@ function loadData(desc, data1) {
         //barResYearM.push(100-(Math.round((femalePerYear[i] * 100) / yearTotal)*10)/10);
         barResYearF.push(femalePerYear[i]);
         barResYearM.push(malePerYear[i]);
+        somme += yearTotal;
+    }
+    if(somme/years.length < 5){
+        document.querySelector("#year").style.display = "none";
     }
 
     let barResDecadeF = [];
