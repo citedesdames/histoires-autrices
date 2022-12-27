@@ -5,7 +5,7 @@ Site web développé à l'Université Paris-Est Marne-la-Vallée, devenue en 202
 Il permet d'explorer des données ouvertes réunies pour la plupart :
 - par l'association *Le deuxième texte*, 
 - par Laura Borie et Mallory Thiébaud pendant leur stage pour le projet *VisiAutrices*, 
-- ainsi que par Delphine Pierson-Linéard, Fil, Jeanne, Lucie Giovanetti, Marie et Mathilde pendant le premier *Datathon des Autrices* organisé en 2022 à Montreuil par l'association *Le deuxième texte*.
+- ainsi que par Delphine Pierson-Liénard, Fil, Jeanne, Lucie Giovanetti, Marie et Mathilde pendant le premier *Datathon des Autrices* organisé en 2022 à Montreuil par l'association *Le deuxième texte*.
 
 ## Visiter le site
 https://citedesdames.github.io/histoires-autrices
