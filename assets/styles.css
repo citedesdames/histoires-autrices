@@ -118,7 +118,8 @@ h2{
   background-color: #f7f6f4;
   font-family: 'Roboto', sans-serif;
   position: relative;
-  overflow-x: hidden;
+  padding-bottom: 300px;
+/*  overflow-x: hidden; */
 }
 
 .hero {
