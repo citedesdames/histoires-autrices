@@ -248,7 +248,7 @@ function loadData(data1) {
     month[4] = "mai";
     month[5] = "juin";
     month[6] = "juillet";
-    month[7] = "aoÃ»t";
+    month[7] = "août";
     month[8] = "septembre";
     month[9] = "octobre";
     month[10] = "novembre";
@@ -282,7 +282,7 @@ function loadData(data1) {
 
         let bio = "";
         if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['siefar'] != undefined) {
-            bio += `Dans le <a href="http://siefar.org/dictionnaire/fr/${res['results']['bindings'][0]['siefar']['value']}" style="color:#cca269"><i>Dictionnaire des femmes de l'ancienne France</i> de la SIEFAR</a>`;
+            bio += `Dans le <a href="https://web.archive.org/web/http://siefar.org/dictionnaire/fr/${res['results']['bindings'][0]['siefar']['value']}" style="color:#cca269"><i>Dictionnaire des femmes de l'ancienne France</i> de la SIEFAR</a>`;
         }
         if (res['results']['bindings'].length > 0 && res['results']['bindings'][0]['wikipedia'] != undefined) {
             if (bio.length > 0) {
